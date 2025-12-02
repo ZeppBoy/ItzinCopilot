@@ -131,6 +131,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-Log.Information("Itzin API starting...");
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    var addresses = app.Urls;
+    Log.Information("Itzin API is ready and listening on: {Addresses}", string.Join(", ", addresses));
+    Log.Information("Swagger UI available at: {SwaggerUrl}/swagger", addresses.First());
+});
 
 app.Run();
