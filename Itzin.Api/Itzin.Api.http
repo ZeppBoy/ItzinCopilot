@@ -1,0 +1,6 @@
+@Itzin.Api_HostAddress = http://localhost:5095
+
+GET {{Itzin.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
