@@ -1,0 +1,119 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <h1>易經 Itzin</h1>
+      <p>Create Your Account</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input 
+            type="text" 
+            id="firstName" 
+            formControlName="firstName"
+            [class.invalid]="firstName?.invalid && firstName?.touched"
+            placeholder="First name"
+          />
+          @if (firstName?.invalid && firstName?.touched) {
+            <div class="error-message">
+              <span>First name is required</span>
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input 
+            type="text" 
+            id="lastName" 
+            formControlName="lastName"
+            [class.invalid]="lastName?.invalid && lastName?.touched"
+            placeholder="Last name"
+          />
+          @if (lastName?.invalid && lastName?.touched) {
+            <div class="error-message">
+              <span>Last name is required</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email"
+          [class.invalid]="email?.invalid && email?.touched"
+          placeholder="Enter your email"
+        />
+        @if (email?.invalid && email?.touched) {
+          <div class="error-message">
+            @if (email?.errors?.['required']) {
+              <span>Email is required</span>
+            }
+            @if (email?.errors?.['email']) {
+              <span>Please enter a valid email</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          formControlName="password"
+          [class.invalid]="password?.invalid && password?.touched"
+          placeholder="Enter your password"
+        />
+        @if (password?.invalid && password?.touched) {
+          <div class="error-message">
+            @if (password?.errors?.['required']) {
+              <span>Password is required</span>
+            }
+            @if (password?.errors?.['minlength']) {
+              <span>Password must be at least 6 characters</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="preferredLanguage">Preferred Language</label>
+        <select id="preferredLanguage" formControlName="preferredLanguage">
+          <option value="en">English</option>
+          <option value="ru">Русский</option>
+        </select>
+      </div>
+
+      @if (errorMessage) {
+        <div class="alert alert-error">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <button 
+        type="submit" 
+        class="btn-primary" 
+        [disabled]="registerForm.invalid || isLoading"
+      >
+        @if (isLoading) {
+          <span>Creating account...</span>
+        } @else {
+          <span>Register</span>
+        }
+      </button>
+    </form>
+
+    <div class="register-footer">
+      <p>
+        Already have an account? 
+        <a routerLink="/login">Login</a>
+      </p>
+    </div>
+  </div>
+</div>

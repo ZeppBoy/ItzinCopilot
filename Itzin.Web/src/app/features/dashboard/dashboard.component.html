@@ -1,0 +1,40 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>易經 Itzin</h1>
+      <div class="user-info">
+        @if (currentUser) {
+          <span>Welcome, {{ currentUser.firstName }}!</span>
+          <button (click)="logout()" class="btn-logout">Logout</button>
+        }
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <div class="welcome-section">
+      <h2>I Ching Divination System</h2>
+      <p>Welcome to Itzin. Your journey with the ancient wisdom begins here.</p>
+    </div>
+
+    <div class="quick-actions">
+      <div class="action-card">
+        <h3>New Consultation</h3>
+        <p>Begin a new I Ching reading</p>
+        <button class="btn-primary">Start Consultation</button>
+      </div>
+
+      <div class="action-card">
+        <h3>Hexagram Library</h3>
+        <p>Browse all 64 hexagrams</p>
+        <button class="btn-secondary">View Library</button>
+      </div>
+
+      <div class="action-card">
+        <h3>History</h3>
+        <p>Review your past consultations</p>
+        <button class="btn-secondary">View History</button>
+      </div>
+    </div>
+  </main>
+</div>
