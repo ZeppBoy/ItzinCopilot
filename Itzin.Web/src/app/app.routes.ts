@@ -41,5 +41,11 @@ export const routes: Routes = [
       .then(m => m.HexagramDetail),
     canActivate: [authGuard]
   },
+  { 
+    path: 'consultation', 
+    loadComponent: () => import('./features/consultation/consultation-flow/consultation-flow')
+      .then(m => m.ConsultationFlow),
+    canActivate: [authGuard]
+  },
   { path: '**', redirectTo: '/login' }
 ];

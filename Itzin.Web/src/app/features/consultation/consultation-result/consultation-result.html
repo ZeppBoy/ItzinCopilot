@@ -1,0 +1,64 @@
+<div class="result-container">
+  <div class="result-card">
+    <h2>Your Hexagram</h2>
+    
+    @if (consultation) {
+      <div class="result-content">
+        @if (consultation.question) {
+          <div class="question-section">
+            <h3>Your Question</h3>
+            <p class="question">{{ consultation.question }}</p>
+          </div>
+        }
+
+        <div class="hexagram-section">
+          <h3>Primary Hexagram</h3>
+          <div class="hexagram-card" (click)="viewHexagram(consultation.primaryHexagramId)">
+            <div class="hexagram-number">{{ consultation.primaryHexagram?.number }}</div>
+            <div class="hexagram-name-chinese">{{ consultation.primaryHexagram?.chineseName }}</div>
+            <div class="hexagram-name">{{ consultation.primaryHexagram?.englishName }}</div>
+            <button class="btn-view">View Full Interpretation →</button>
+          </div>
+        </div>
+
+        @if (consultation.relatingHexagramId && consultation.changingLines.length > 0) {
+          <div class="changing-lines-section">
+            <h3>Changing Lines</h3>
+            <p class="changing-info">
+              Lines {{ consultation.changingLines.join(', ') }} are changing
+            </p>
+          </div>
+
+          <div class="hexagram-section">
+            <h3>Relating Hexagram</h3>
+            <div class="hexagram-card" (click)="viewHexagram(consultation.relatingHexagramId)">
+              <div class="hexagram-number">{{ consultation.relatingHexagram?.number }}</div>
+              <div class="hexagram-name-chinese">{{ consultation.relatingHexagram?.chineseName }}</div>
+              <div class="hexagram-name">{{ consultation.relatingHexagram?.englishName }}</div>
+              <button class="btn-view">View Full Interpretation →</button>
+            </div>
+          </div>
+        }
+
+        <div class="guidance-text">
+          <p>
+            Click on the hexagrams above to view their full interpretations and understand the guidance they offer.
+          </p>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn-primary" (click)="newConsultation()">
+            New Consultation
+          </button>
+          <button class="btn-secondary" (click)="goToDashboard()">
+            Back to Dashboard
+          </button>
+        </div>
+      </div>
+    } @else {
+      <div class="loading">
+        <p>Generating your consultation...</p>
+      </div>
+    }
+  </div>
+</div>

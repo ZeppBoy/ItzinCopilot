@@ -1,0 +1,75 @@
+<div class="coin-toss-container">
+  <div class="toss-card">
+    <h2>Toss the Coins</h2>
+    <p class="instruction">
+      Click the button to toss three coins. Repeat six times to build your hexagram.
+    </p>
+
+    <div class="progress-section">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progress"></div>
+      </div>
+      <div class="progress-text">
+        Line {{ tossResults.length + 1 }} of 6
+        <span *ngIf="remainingTosses > 0">({{ remainingTosses }} remaining)</span>
+      </div>
+    </div>
+
+    @if (isTossing) {
+      <div class="coins-animation">
+        <div class="coin spinning">🪙</div>
+        <div class="coin spinning" [style.animation-delay]="'0.1s'">🪙</div>
+        <div class="coin spinning" [style.animation-delay]="'0.2s'">🪙</div>
+      </div>
+    }
+
+    @if (showResult && currentToss) {
+      <div class="toss-result">
+        <div class="result-coins">
+          @for (coin of currentToss.coins; track $index) {
+            <div class="coin-result" [class.heads]="coin.value === 'heads'">
+              {{ coin.value === 'heads' ? '👑' : '⚪' }}
+            </div>
+          }
+        </div>
+        <div class="result-line">
+          <div class="line-symbol">{{ getLineSymbol(currentToss) }}</div>
+          <div class="line-description">{{ getLineDescription(currentToss) }}</div>
+        </div>
+      </div>
+    }
+
+    @if (tossResults.length > 0) {
+      <div class="hexagram-preview">
+        <h3>Building Hexagram</h3>
+        <div class="lines-display">
+          @for (result of tossResults; track $index) {
+            <div class="line-item" [class.changing]="result.isChanging">
+              {{ getLineSymbol(result) }}
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <div class="button-section">
+      @if (tossResults.length < totalTosses) {
+        <button 
+          class="btn-toss" 
+          (click)="performToss()"
+          [disabled]="isTossing"
+        >
+          @if (isTossing) {
+            <span>Tossing...</span>
+          } @else {
+            <span>🪙 Toss Coins</span>
+          }
+        </button>
+      } @else {
+        <div class="completion-message">
+          <p>All tosses complete! Generating your hexagram...</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

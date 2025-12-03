@@ -1,0 +1,220 @@
+.result-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.result-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  max-width: 800px;
+  width: 100%;
+
+  h2 {
+    color: #c41e3a;
+    font-size: 2.5rem;
+    margin: 0 0 30px;
+    text-align: center;
+  }
+}
+
+.question-section {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+
+  h3 {
+    color: #c41e3a;
+    font-size: 1.2rem;
+    margin: 0 0 10px;
+  }
+
+  .question {
+    color: #333;
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+.hexagram-section {
+  margin-bottom: 30px;
+
+  h3 {
+    color: #c41e3a;
+    font-size: 1.3rem;
+    margin: 0 0 15px;
+    text-align: center;
+  }
+}
+
+.hexagram-card {
+  background: linear-gradient(to bottom, #f8f9fa, white);
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    border-color: #c41e3a;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(196, 30, 58, 0.2);
+  }
+
+  .hexagram-number {
+    color: #999;
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .hexagram-name-chinese {
+    color: #c41e3a;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 10px 0;
+  }
+
+  .hexagram-name {
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 10px 0 20px;
+  }
+
+  .btn-view {
+    background: #c41e3a;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+      background: #a01829;
+    }
+  }
+}
+
+.changing-lines-section {
+  background: #fff8dc;
+  border-left: 4px solid #d4af37;
+  border-radius: 4px;
+  padding: 15px 20px;
+  margin-bottom: 30px;
+
+  h3 {
+    color: #c41e3a;
+    font-size: 1.1rem;
+    margin: 0 0 10px;
+  }
+
+  .changing-info {
+    color: #666;
+    margin: 0;
+    font-weight: 600;
+  }
+}
+
+.guidance-text {
+  text-align: center;
+  padding: 20px 0;
+  color: #666;
+  line-height: 1.6;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 12px 30px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.btn-primary {
+  background-color: #c41e3a;
+  color: white;
+  border-color: #c41e3a;
+
+  &:hover {
+    background-color: #a01829;
+    border-color: #a01829;
+  }
+}
+
+.btn-secondary {
+  background-color: white;
+  color: #666;
+  border-color: #ddd;
+
+  &:hover {
+    background-color: #f8f9fa;
+    border-color: #c41e3a;
+    color: #c41e3a;
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+
+  p {
+    color: #c41e3a;
+    font-size: 1.2rem;
+    font-weight: 600;
+    animation: pulse 2s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@media (max-width: 768px) {
+  .result-card {
+    padding: 30px 20px;
+
+    h2 {
+      font-size: 2rem;
+    }
+  }
+
+  .hexagram-card {
+    .hexagram-name-chinese {
+      font-size: 2rem;
+    }
+
+    .hexagram-name {
+      font-size: 1.2rem;
+    }
+  }
+
+  .action-buttons {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+<div class="consultation-flow">
+  @if (currentStep !== 'result') {
+    <button class="btn-back-nav" (click)="goBack()">← Back</button>
+  }
+
+  @if (errorMessage) {
+    <div class="error-alert">
+      {{ errorMessage }}
+    </div>
+  }
+
+  @if (currentStep === 'question') {
+    <app-question-input (questionSubmitted)="onQuestionSubmitted($event)"></app-question-input>
+  }
+
+  @if (currentStep === 'toss') {
+    <app-coin-toss (allTossesComplete)="onAllTossesComplete()"></app-coin-toss>
+  }
+
+  @if (currentStep === 'result' && consultation) {
+    <app-consultation-result [consultation]="consultation"></app-consultation-result>
+  }
+
+  @if (isCreating) {
+    <div class="creating-overlay">
+      <div class="spinner"></div>
+      <p>Creating your consultation...</p>
+    </div>
+  }
+</div>

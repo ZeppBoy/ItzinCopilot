@@ -1,0 +1,33 @@
+<div class="question-input-container">
+  <div class="question-card">
+    <h2>Ask Your Question</h2>
+    <p class="instruction">
+      What guidance do you seek from the I Ching? 
+      Enter your question or leave it blank to proceed with a general consultation.
+    </p>
+
+    <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <textarea
+          id="question"
+          formControlName="question"
+          [maxlength]="maxLength"
+          placeholder="Type your question here... (optional)"
+          rows="6"
+        ></textarea>
+        <div class="char-count">
+          {{ remainingChars }} characters remaining
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="btn-primary">
+          Continue to Coin Toss
+        </button>
+        <button type="button" class="btn-secondary" (click)="skip()">
+          Skip Question
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
