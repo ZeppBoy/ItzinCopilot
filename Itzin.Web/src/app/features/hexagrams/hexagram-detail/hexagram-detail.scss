@@ -1,0 +1,236 @@
+.hexagram-detail-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  padding: 40px 20px;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: white;
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 20px;
+    border: 4px solid rgba(196, 30, 58, 0.2);
+    border-top-color: #c41e3a;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+}
+
+.alert {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 15px;
+  border-radius: 4px;
+  text-align: center;
+  
+  &.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+}
+
+.hexagram-detail {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.detail-header {
+  background: linear-gradient(135deg, #c41e3a 0%, #a01829 100%);
+  padding: 30px;
+  color: white;
+  position: relative;
+
+  .btn-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+
+    &:hover {
+      background: white;
+      color: #c41e3a;
+    }
+  }
+
+  .header-content {
+    text-align: center;
+    padding-top: 20px;
+
+    .hexagram-number {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 10px;
+    }
+
+    .hexagram-chinese {
+      font-size: 3rem;
+      margin: 10px 0;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .hexagram-pinyin {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+
+    .hexagram-name {
+      font-size: 1.8rem;
+      margin: 10px 0 0;
+      font-weight: 500;
+      color: #d4af37;
+    }
+  }
+}
+
+.hexagram-body {
+  padding: 40px;
+}
+
+.hexagram-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: linear-gradient(to bottom, #f8f9fa, white);
+  border-radius: 8px;
+
+  .hexagram-lines {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+
+    .line {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #333;
+      font-family: monospace;
+
+      &.yang {
+        color: #c41e3a;
+      }
+
+      &.yin {
+        color: #555;
+      }
+    }
+  }
+
+  .trigrams {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .trigram {
+      background: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+      .label {
+        font-weight: 600;
+        color: #666;
+        margin-right: 10px;
+      }
+
+      .value {
+        color: #333;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.hexagram-content {
+  .interpretation-section {
+    margin-bottom: 40px;
+
+    h3 {
+      color: #c41e3a;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #d4af37;
+    }
+
+    .interpretation-text {
+      line-height: 1.8;
+      color: #333;
+
+      p {
+        margin: 15px 0;
+        font-size: 1.05rem;
+      }
+    }
+
+    .lines-list {
+      .line-interpretation {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        border-left: 4px solid #c41e3a;
+
+        h4 {
+          color: #c41e3a;
+          font-size: 1.1rem;
+          margin: 0 0 10px;
+        }
+
+        p {
+          margin: 0;
+          line-height: 1.6;
+          color: #555;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .hexagram-visual {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .detail-header {
+    .header-content {
+      .hexagram-chinese {
+        font-size: 2rem;
+      }
+
+      .hexagram-name {
+        font-size: 1.4rem;
+      }
+    }
+  }
+
+  .hexagram-body {
+    padding: 20px;
+  }
+}

@@ -1,0 +1,32 @@
+<div class="hexagram-list-container">
+  <div class="header">
+    <h1>易經 I Ching Hexagrams</h1>
+    <p class="subtitle">The 64 Hexagrams of the I Ching</p>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Loading hexagrams...</p>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-error">
+      {{ errorMessage }}
+    </div>
+  }
+
+  @if (!isLoading && hexagrams.length > 0) {
+    <div class="hexagram-grid">
+      @for (hexagram of hexagrams; track hexagram.id) {
+        <div class="hexagram-card" (click)="viewHexagram(hexagram.id)">
+          <div class="hexagram-number">{{ hexagram.number }}</div>
+          <div class="hexagram-symbol">{{ getHexagramSymbol(hexagram.number) }}</div>
+          <div class="hexagram-chinese">{{ hexagram.chineseName }}</div>
+          <div class="hexagram-name">{{ hexagram.englishName }}</div>
+        </div>
+      }
+    </div>
+  }
+</div>

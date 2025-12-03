@@ -29,5 +29,17 @@ export const routes: Routes = [
       .then(m => m.DashboardComponent),
     canActivate: [authGuard]
   },
+  { 
+    path: 'hexagrams', 
+    loadComponent: () => import('./features/hexagrams/hexagram-list/hexagram-list')
+      .then(m => m.HexagramList),
+    canActivate: [authGuard]
+  },
+  { 
+    path: 'hexagrams/:id', 
+    loadComponent: () => import('./features/hexagrams/hexagram-detail/hexagram-detail')
+      .then(m => m.HexagramDetail),
+    canActivate: [authGuard]
+  },
   { path: '**', redirectTo: '/login' }
 ];
