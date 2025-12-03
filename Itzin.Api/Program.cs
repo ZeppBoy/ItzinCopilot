@@ -114,15 +114,12 @@ using (var scope = app.Services.CreateScope())
     await DbInitializer.InitializeAsync(context, logger);
 }
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseSerilogRequestLogging();
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseCors("AllowAngular");
 
