@@ -65,9 +65,9 @@
   padding: 40px 0;
 
   .coin {
-    font-size: 4rem;
-    animation: spin 1.5s linear infinite;
-
+    width: 80px;
+    height: 80px;
+    
     &.spinning {
       animation: spin 1.5s linear infinite, bounce 1.5s ease-in-out infinite;
     }
@@ -98,11 +98,13 @@
     margin-bottom: 20px;
 
     .coin-result {
-      font-size: 3rem;
+      width: 70px;
+      height: 70px;
       animation: fadeIn 0.5s ease-in;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 
       &.heads {
-        transform: scale(1.1);
+        transform: scale(1.05);
       }
     }
   }
@@ -227,10 +229,12 @@
   }
 
   .coins-animation .coin {
-    font-size: 3rem;
+    width: 60px;
+    height: 60px;
   }
 
   .toss-result .result-coins .coin-result {
-    font-size: 2.5rem;
+    width: 55px;
+    height: 55px;
   }
 }

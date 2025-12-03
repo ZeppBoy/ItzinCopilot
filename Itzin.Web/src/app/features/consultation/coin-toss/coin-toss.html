@@ -17,9 +17,9 @@
 
     @if (isTossing) {
       <div class="coins-animation">
-        <div class="coin spinning">🪙</div>
-        <div class="coin spinning" [style.animation-delay]="'0.1s'">🪙</div>
-        <div class="coin spinning" [style.animation-delay]="'0.2s'">🪙</div>
+        <img src="/assets/coins/coin-heads.svg" class="coin spinning" alt="Coin tossing">
+        <img src="/assets/coins/coin-heads.svg" class="coin spinning" [style.animation-delay]="'0.1s'" alt="Coin tossing">
+        <img src="/assets/coins/coin-heads.svg" class="coin spinning" [style.animation-delay]="'0.2s'" alt="Coin tossing">
       </div>
     }
 
@@ -27,9 +27,11 @@
       <div class="toss-result">
         <div class="result-coins">
           @for (coin of currentToss.coins; track $index) {
-            <div class="coin-result" [class.heads]="coin.value === 'heads'">
-              {{ coin.value === 'heads' ? '👑' : '⚪' }}
-            </div>
+            <img 
+              [src]="coin.value === 'heads' ? '/assets/coins/coin-heads.svg' : '/assets/coins/coin-tails.svg'" 
+              class="coin-result" 
+              [class.heads]="coin.value === 'heads'"
+              [alt]="coin.value">
           }
         </div>
         <div class="result-line">
