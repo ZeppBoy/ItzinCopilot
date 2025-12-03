@@ -30,7 +30,11 @@ public class ConsultationsController : ControllerBase
         var userId = GetUserId();
         var language = request.Language ?? "en";
 
-        var consultation = await _consultationService.CreateConsultationAsync(userId, request.Question, language);
+        var consultation = await _consultationService.CreateConsultationWithTossesAsync(
+            userId, 
+            request.Question ?? string.Empty, 
+            request.TossResults, 
+            language);
 
         _logger.LogInformation("Consultation created for user {UserId}", userId);
 

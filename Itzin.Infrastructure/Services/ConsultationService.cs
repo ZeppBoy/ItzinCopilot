@@ -23,16 +23,20 @@ public class ConsultationService : IConsultationService
     {
         // Perform coin tosses (6 times, 3 coins each time)
         var tossValues = _coinTossService.TossCoins(6);
-        
+        return await CreateConsultationWithTossesAsync(userId, question, tossValues, language);
+    }
+
+    public async Task<Consultation> CreateConsultationWithTossesAsync(int userId, string question, List<int> tossResults, string language)
+    {
         // Calculate primary hexagram
-        var primaryBinary = _hexagramService.CalculateHexagramBinary(tossValues);
+        var primaryBinary = _hexagramService.CalculateHexagramBinary(tossResults);
         var primaryHexagram = await _hexagramService.GetHexagramByBinaryAsync(primaryBinary);
         
         if (primaryHexagram == null)
             throw new InvalidOperationException($"Hexagram not found for binary: {primaryBinary}");
 
         // Get changing lines
-        var changingLines = _hexagramService.GetChangingLines(tossValues);
+        var changingLines = _hexagramService.GetChangingLines(tossResults);
         
         // Calculate relating hexagram if there are changing lines
         Hexagram? relatingHexagram = null;
@@ -48,7 +52,7 @@ public class ConsultationService : IConsultationService
             UserId = userId,
             Question = question,
             QuestionLanguage = language,
-            TossResults = string.Join(",", tossValues),
+            TossResults = string.Join(",", tossResults),
             PrimaryHexagramId = primaryHexagram.Id,
             RelatingHexagramId = relatingHexagram?.Id,
             ChangingLines = changingLines.Count > 0 ? string.Join(",", changingLines) : null,

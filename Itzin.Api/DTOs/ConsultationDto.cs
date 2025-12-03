@@ -4,13 +4,16 @@ namespace Itzin.Api.DTOs;
 
 public class CreateConsultationDto
 {
-    [Required]
-    [MinLength(3)]
     [MaxLength(500)]
-    public string Question { get; set; } = string.Empty;
+    public string? Question { get; set; }
 
     [MaxLength(10)]
     public string Language { get; set; } = "en";
+
+    [Required]
+    [MinLength(6)]
+    [MaxLength(6)]
+    public List<int> TossResults { get; set; } = new();
 }
 
 public class ConsultationResponseDto
