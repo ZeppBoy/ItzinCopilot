@@ -39,15 +39,25 @@ public class HexagramService : IHexagramService
         {
             var value = tossValues[i];
             
-            // Convert toss value to binary:
-            // 3 (old yang) -> 1 (yang line, but changing)
-            // 2 (young yin) -> 0 (yin line)
-            // 1 (young yang) -> 1 (yang line)
-            // 0 (old yin) -> 0 (yin line, but changing)
-            binary[i] = (value == 1 || value == 3) ? '1' : '0';
+            // Convert toss value to binary (traditional I Ching values):
+            // 9 (old yang) -> 1 (yang line, changing)
+            // 8 (young yin) -> 0 (yin line, static)
+            // 7 (young yang) -> 1 (yang line, static)
+            // 6 (old yin) -> 0 (yin line, changing)
+            binary[i] = value switch
+            {
+                6 => '0', // old yin -> yin line
+                7 => '1', // young yang -> yang line
+                8 => '0', // young yin -> yin line
+                9 => '1', // old yang -> yang line
+                _ => throw new ArgumentException($"Invalid toss value: {value}. Must be 6, 7, 8, or 9.")
+            };
         }
         
-        return new string(binary);
+        //binary=  (char[])binary.Reverse();
+       // return new string(binary);
+        return new string(binary.Reverse().ToArray());
+       
     }
 
     public List<int> GetChangingLines(List<int> tossValues)
@@ -56,8 +66,8 @@ public class HexagramService : IHexagramService
         
         for (int i = 0; i < tossValues.Count; i++)
         {
-            // Lines with value 0 or 3 are changing lines
-            if (tossValues[i] == 0 || tossValues[i] == 3)
+            // Lines with value 6 or 9 are changing lines
+            if (tossValues[i] == 6 || tossValues[i] == 9)
             {
                 changingLines.Add(i + 1); // Line numbers are 1-indexed
             }

@@ -55,15 +55,15 @@ export class AuthService {
   }
 
   requestPasswordReset(request: PasswordResetRequest): Observable<void> {
-    return this.http.post<void>(`${environment.apiUrl}/auth/request-password-reset`, request);
+    return this.http.post<void>(`${environment.apiUrl}/auth/forgot-password`, request);
   }
 
   resetPassword(request: PasswordResetConfirm): Observable<void> {
     return this.http.post<void>(`${environment.apiUrl}/auth/reset-password`, request);
   }
 
-  verifyEmail(email: string, token: string): Observable<void> {
-    return this.http.post<void>(`${environment.apiUrl}/auth/verify-email`, { email, token });
+  verifyEmail(token: string): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/auth/verify-email?token=${token}`, {});
   }
 
   refreshToken(): Observable<AuthResponse> {
