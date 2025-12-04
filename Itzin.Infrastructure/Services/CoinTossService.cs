@@ -16,6 +16,15 @@ public class CoinTossService : ICoinTossService
         // Return 0 (tails) or 1 (heads)
         return (int)(randomValue % 2);
     }
+    public async Task<int> GetTossCoinResultAsync()
+    {
+        var t =  await Task.Run(() => {
+            Thread.Sleep(1000);
+            return RandomNumberGenerator.GetInt32(0, 2);
+        });
+
+        return t;
+    }
 
     public List<int> TossCoins(int count = 6)
     {
@@ -72,8 +81,14 @@ public class CoinTossService : ICoinTossService
         var coins = new List<string>();
         for (int i = 0; i < 3; i++)
         {
-            coins.Add(TossCoin() == 0 ? "tails" : "heads");
+            //coins.Add(TossCoin() == 0 ? "tails" : "heads");
+            coins.Add(Task.Run(async () => await GetTossCoinResultAsync())?.Result == 0 ? "tails" : "heads");
+          
+
+           // var t = Task.Run(async () => await GetTossCoinResultAsync()).Result;
         }
         return coins;
     }
+    
+    
 }
