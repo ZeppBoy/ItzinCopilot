@@ -84,6 +84,62 @@ public class ConsultationsController : ControllerBase
         }
     }
 
+    [HttpPost("toss")]
+    public ActionResult<CoinTossResponseDto> TossCoins([FromQuery] int tossNumber = 1)
+    {
+        var random = new Random();
+        var coins = new List<CoinDto>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            coins.Add(new CoinDto
+            {
+                Value = random.Next(2) == 0 ? "heads" : "tails"
+            });
+        }
+
+        // Calculate line value: heads=3, tails=2
+        var lineValue = coins.Sum(c => c.Value == "heads" ? 3 : 2);
+
+        // Determine line type and if it's changing
+        // 6 = old yin (changing), 7 = young yang, 8 = young yin, 9 = old yang (changing)
+        string lineType;
+        bool isChanging;
+
+        switch (lineValue)
+        {
+            case 6:
+                lineType = "yin";
+                isChanging = true;
+                break;
+            case 7:
+                lineType = "yang";
+                isChanging = false;
+                break;
+            case 8:
+                lineType = "yin";
+                isChanging = false;
+                break;
+            case 9:
+                lineType = "yang";
+                isChanging = true;
+                break;
+            default:
+                lineType = "yang";
+                isChanging = false;
+                break;
+        }
+
+        return Ok(new CoinTossResponseDto
+        {
+            TossNumber = tossNumber,
+            Coins = coins,
+            LineValue = lineValue,
+            LineType = lineType,
+            IsChanging = isChanging
+        });
+    }
+
     private int GetUserId()
     {
         var userIdClaim = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value 

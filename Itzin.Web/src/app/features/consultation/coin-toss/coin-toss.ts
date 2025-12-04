@@ -40,15 +40,22 @@ export class CoinToss {
     this.isTossing = true;
     this.showResult = false;
 
-    // Animate for 1.5 seconds
+    // Animate for 1.5 seconds then call API
     setTimeout(() => {
-      const result = this.consultationService.tossCoins();
-      this.currentToss = result;
-      this.consultationService.addTossResult(result);
-      this.tossResults.push(result);
+      this.consultationService.tossCoins().subscribe({
+        next: (result) => {
+          this.currentToss = result;
+          this.consultationService.addTossResult(result);
+          this.tossResults.push(result);
 
-      this.isTossing = false;
-      this.showResult = true;
+          this.isTossing = false;
+          this.showResult = true;
+        },
+        error: (error) => {
+          console.error('Error tossing coins:', error);
+          this.isTossing = false;
+        }
+      });
     }, 1500);
   }
 
