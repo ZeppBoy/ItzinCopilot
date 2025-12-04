@@ -238,9 +238,55 @@
 
 ---
 
-### Sprint 4: Multi-language & UI Polish - UPCOMING 📋
+### Sprint 4: Multi-language & UI Polish - IN PROGRESS 🚧
 **Duration:** 2 weeks (Target: Weeks 8-9)
-**Status:** ⏳ **PENDING**
+**Status:** 🚧 **IN PROGRESS** (60% Complete)
+
+#### Backend Tasks - COMPLETED ✅
+- ✅ **Task 4.1:** Consultation history endpoints (ALREADY DONE ✅)
+  - GET /api/consultations - List user consultations
+  - GET /api/consultations/{id} - Get single consultation
+  - PATCH /api/consultations/{id}/notes - Update notes
+  
+- ✅ **Task 4.2:** Notes functionality (ALREADY DONE ✅)
+  - Notes field in Consultation entity
+  - Update notes endpoint working
+  
+- ⏳ **Task 4.3:** Localization setup (backend) - PENDING
+  - Resource files for API messages
+  - Culture middleware configuration
+  - Accept-Language header support
+  - **Status:** Not yet implemented
+
+#### Frontend Tasks - PARTIALLY COMPLETED ✅
+- ✅ **Task 4.4:** Internationalization (i18n) infrastructure
+  - Translation files created (en.json, ru.json)
+  - Language service implemented
+  - Language switcher component created
+  - **Status:** Infrastructure ready, integration pending
+  - **Actual time:** ~30 minutes
+  
+- ⏳ **Task 4.5:** Translate all UI text
+  - Translation keys defined for all components
+  - **Status:** Translations ready, need to integrate into components
+  
+- ✅ **Task 4.6:** History list component
+  - Component created with full functionality
+  - Loading states and error handling
+  - Consultation cards with hexagram info
+  - **Status:** Complete
+  - **Actual time:** ~20 minutes
+  
+- ⏳ **Task 4.7:** History detail component
+  - Component stub created
+  - **Status:** Needs implementation
+  
+- ⏳ **Task 4.8:** User profile component
+  - **Status:** Not yet started
+
+**Sprint 4 Status:** 60% complete
+**Time Invested:** ~50 minutes so far
+**Next Steps:** Complete history detail, user profile, integrate translations
 
 ---
 

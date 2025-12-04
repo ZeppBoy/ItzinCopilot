@@ -46,24 +46,44 @@ export class CoinToss {
       this.currentToss = result;
       this.consultationService.addTossResult(result);
       this.tossResults.push(result);
-      
+
       this.isTossing = false;
       this.showResult = true;
-
-      // Auto-proceed to next toss or complete
-      if (this.tossResults.length >= this.totalTosses) {
-        setTimeout(() => {
-          this.allTossesComplete.emit();
-        }, 2000);
-      }
     }, 1500);
   }
 
+  proceedToResult(): void {
+    this.allTossesComplete.emit();
+  }
+
+  getEmptySlots(): number[] {
+    const remaining = this.totalTosses - this.tossResults.length;
+    return Array(remaining).fill(0).map((_, i) => i);
+  }
+
+  getLineSolid(result: CoinTossResult): string {
+    // All lines are solid with same length, changing indicators in center
+    if (result.lineType === 'yang') {
+      // Yang line: solid line with × in center if changing
+      return result.isChanging ? '▬▬▬×▬▬▬' : '▬▬▬▬▬▬▬';
+    } else {
+      // Yin line: solid line with ○ in center if changing (same length as yang)
+      return result.isChanging ? '▬▬▬○▬▬▬' : '▬▬▬▬▬▬▬';
+    }
+  }
+
+  // getLineSymbol(result: CoinTossResult): string {
+  //   if (result.isChanging) {
+  //     return result.lineType === 'yang' ? '━━×━━' : '━━○━━';
+  //   }
+  //     return result.lineType === 'yang' ? '━━━━━' : '━━ ━━';
+  // }
+
   getLineSymbol(result: CoinTossResult): string {
     if (result.isChanging) {
-      return result.lineType === 'yang' ? '━━━━━━ ×' : '━━  ━━ ○';
+      return result.lineType === 'yang' ? '/assets/lines/oldYang.png' : '/assets/lines/oldYin.png';
     }
-    return result.lineType === 'yang' ? '━━━━━━' : '━━  ━━';
+    return result.lineType === 'yang' ? '/assets/lines/NewYang.png' : '/assets/lines/newYin.png';
   }
 
   getLineDescription(result: CoinTossResult): string {

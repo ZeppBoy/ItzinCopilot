@@ -1,0 +1,88 @@
+<div class="history-container">
+  <div class="history-header">
+    <h1>Consultation History</h1>
+    <button class="btn-primary" routerLink="/consultation">
+      New Consultation
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Loading your consultations...</p>
+    </div>
+  }
+
+  @if (error) {
+    <div class="error-message">
+      {{ error }}
+      <button class="btn-secondary" (click)="loadConsultations()">Retry</button>
+    </div>
+  }
+
+  @if (!loading && !error && consultations.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">📜</div>
+      <h2>No Consultations Yet</h2>
+      <p>Your consultation history will appear here once you've performed your first reading.</p>
+      <button class="btn-primary" routerLink="/consultation">
+        Start Your First Consultation
+      </button>
+    </div>
+  }
+
+  @if (!loading && consultations.length > 0) {
+    <div class="consultations-list">
+      @for (consultation of consultations; track consultation.id) {
+        <div 
+          class="consultation-card"
+          [routerLink]="['/history', consultation.id]"
+        >
+          <div class="consultation-header">
+            <div class="hexagram-info">
+              <span class="hexagram-number">
+                Hexagram {{ consultation.primaryHexagram?.number }}
+              </span>
+              <span class="hexagram-name">
+                {{ consultation.primaryHexagram?.englishName }}
+              </span>
+            </div>
+            <span class="consultation-date">
+              {{ formatDate(consultation.createdAt) }}
+            </span>
+          </div>
+
+          <div class="consultation-body">
+            @if (consultation.question) {
+              <div class="question">
+                <strong>Question:</strong> {{ consultation.question }}
+              </div>
+            } @else {
+              <div class="question empty">
+                <em>No question provided</em>
+              </div>
+            }
+
+            @if (consultation.changingLines && consultation.changingLines.length > 0) {
+              <div class="changing-lines">
+                <strong>Changing Lines:</strong> 
+                {{ consultation.changingLines.join(', ') }}
+              </div>
+            }
+
+            @if (consultation.relatingHexagram) {
+              <div class="relating-hexagram">
+                <strong>Relating Hexagram:</strong> 
+                {{ consultation.relatingHexagram.number }} - {{ consultation.relatingHexagram.englishName }}
+              </div>
+            }
+          </div>
+
+          <div class="consultation-footer">
+            <span class="view-details">View Details →</span>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

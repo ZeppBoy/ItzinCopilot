@@ -10,68 +10,84 @@
         <div class="progress-fill" [style.width.%]="progress"></div>
       </div>
       <div class="progress-text">
-        Line {{ tossResults.length + 1 }} of 6
-        <span *ngIf="remainingTosses > 0">({{ remainingTosses }} remaining)</span>
+        Line {{ tossResults.length }} of 6 completed
+        @if (remainingTosses > 0) {
+          <span class="remaining">({{ remainingTosses }} remaining)</span>
+        }
       </div>
     </div>
 
-    @if (isTossing) {
-      <div class="coins-animation">
-        <img src="/assets/coins/coin-heads.svg" class="coin spinning" alt="Coin tossing">
-        <img src="/assets/coins/coin-heads.svg" class="coin spinning" [style.animation-delay]="'0.1s'" alt="Coin tossing">
-        <img src="/assets/coins/coin-heads.svg" class="coin spinning" [style.animation-delay]="'0.2s'" alt="Coin tossing">
-      </div>
-    }
+    <div class="main-content">
+      <!-- Left side: Toss button and coin animation -->
+      <div class="toss-section">
+        @if (tossResults.length < totalTosses) {
+          <button
+            class="btn-toss"
+            (click)="performToss()"
+            [disabled]="isTossing"
+          >
+            @if (isTossing) {
+              <span>Tossing...</span>
+            } @else {
+              <span>🪙 Toss Coins</span>
+            }
+          </button>
+        } @else {
+          <div class="completion-section">
+            <div class="completion-message">
+              <p>✨ Hexagram Complete!</p>
+            </div>
+            <button class="btn-next" (click)="proceedToResult()">
+              View Result →
+            </button>
+          </div>
+        }
 
-    @if (showResult && currentToss) {
-      <div class="toss-result">
-        <div class="result-coins">
-          @for (coin of currentToss.coins; track $index) {
-            <img 
-              [src]="coin.value === 'heads' ? '/assets/coins/coin-heads.svg' : '/assets/coins/coin-tails.svg'" 
-              class="coin-result" 
-              [class.heads]="coin.value === 'heads'"
-              [alt]="coin.value">
-          }
-        </div>
-        <div class="result-line">
-          <div class="line-symbol">{{ getLineSymbol(currentToss) }}</div>
-          <div class="line-description">{{ getLineDescription(currentToss) }}</div>
-        </div>
-      </div>
-    }
+        @if (isTossing) {
+          <div class="coins-animation">
+            <img src="/assets/coins/coin-heads.svg" class="coin spinning" alt="Coin tossing">
+            <img src="/assets/coins/coin-heads.svg" class="coin spinning" [style.animation-delay]="'0.1s'" alt="Coin tossing">
+            <img src="/assets/coins/coin-heads.svg" class="coin spinning" [style.animation-delay]="'0.2s'" alt="Coin tossing">
+          </div>
+        }
 
-    @if (tossResults.length > 0) {
-      <div class="hexagram-preview">
+        @if (showResult && currentToss) {
+          <div class="toss-result">
+            <div class="result-coins">
+              @for (coin of currentToss.coins; track $index) {
+                <img
+                  [src]="coin.value === 'heads' ? '/assets/coins/coin-heads.svg' : '/assets/coins/coin-tails.svg'"
+                  class="coin-result"
+                  [class.heads]="coin.value === 'heads'"
+                  [alt]="coin.value">
+              }
+            </div>
+            <div class="result-line">
+              <div class="line-description">{{ getLineDescription(currentToss) }}</div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Right side: Hexagram display -->
+      <div class="hexagram-section">
         <h3>Building Hexagram</h3>
-        <div class="lines-display">
+        <div class="hexagram-display">
           @for (result of tossResults; track $index) {
-            <div class="line-item" [class.changing]="result.isChanging">
-              {{ getLineSymbol(result) }}
+            <div class="hexagram-line" [class.changing]="result.isChanging">
+              <span class="line-number">{{ $index + 1 }}</span>
+              <img [src]="getLineSymbol(result)" [alt]="getLineDescription(result)" class="line-visual">
+            </div>
+          }
+          <!-- Show empty placeholders for remaining tosses -->
+          @for (i of getEmptySlots(); track i) {
+            <div class="hexagram-line empty">
+              <span class="line-number">{{ tossResults.length + i + 1 }}</span>
+              <span class="line-visual"></span>
             </div>
           }
         </div>
       </div>
-    }
-
-    <div class="button-section">
-      @if (tossResults.length < totalTosses) {
-        <button 
-          class="btn-toss" 
-          (click)="performToss()"
-          [disabled]="isTossing"
-        >
-          @if (isTossing) {
-            <span>Tossing...</span>
-          } @else {
-            <span>🪙 Toss Coins</span>
-          }
-        </button>
-      } @else {
-        <div class="completion-message">
-          <p>All tosses complete! Generating your hexagram...</p>
-        </div>
-      }
     </div>
   </div>
 </div>

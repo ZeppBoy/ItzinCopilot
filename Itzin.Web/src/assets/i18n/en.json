@@ -1,0 +1,190 @@
+{
+  "app": {
+    "title": "Itzin - I Ching Divination",
+    "subtitle": "Ancient Wisdom, Modern Insight"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "consultation": "New Consultation",
+    "hexagrams": "Hexagram Library",
+    "history": "History",
+    "profile": "Profile",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "submit": "Login",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Register here",
+      "error": "Invalid email or password"
+    },
+    "register": {
+      "title": "Create Account",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "preferredLanguage": "Preferred Language",
+      "submit": "Register",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Login here",
+      "success": "Registration successful! Please check your email.",
+      "error": "Registration failed. Please try again.",
+      "passwordMismatch": "Passwords do not match"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "subtitle": "Enter your email to receive a password reset link",
+      "email": "Email",
+      "submit": "Send Reset Link",
+      "back": "Back to Login",
+      "success": "Password reset link sent to your email",
+      "error": "Failed to send reset link"
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "subtitle": "Enter your new password",
+      "password": "New Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Reset Password",
+      "success": "Password reset successfully",
+      "error": "Failed to reset password",
+      "invalidToken": "Invalid or expired reset token"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back, {{name}}",
+    "newConsultation": "New Consultation",
+    "stats": {
+      "total": "Total Consultations",
+      "thisMonth": "This Month",
+      "thisWeek": "This Week"
+    },
+    "recentConsultations": "Recent Consultations",
+    "noConsultations": "No consultations yet. Start your first consultation!",
+    "viewAll": "View All"
+  },
+  "consultation": {
+    "title": "New Consultation",
+    "question": {
+      "title": "Ask Your Question",
+      "subtitle": "What guidance do you seek from the I Ching?",
+      "placeholder": "Enter your question (optional)",
+      "charCount": "{{count}}/500 characters",
+      "next": "Begin Coin Toss",
+      "skip": "Skip Question"
+    },
+    "coinToss": {
+      "title": "Coin Toss",
+      "subtitle": "Cast six times to build your hexagram",
+      "toss": "Toss Coins",
+      "progress": "Toss {{current}} of 6",
+      "line": "Line {{number}}",
+      "yangSolid": "Yang (solid line)",
+      "yinBroken": "Yin (broken line)",
+      "yangChanging": "Yang changing to Yin",
+      "yinChanging": "Yin changing to Yang",
+      "complete": "Hexagram Complete",
+      "viewResult": "View Result"
+    },
+    "result": {
+      "title": "Your Consultation",
+      "question": "Your Question",
+      "noQuestion": "No question asked",
+      "primaryHexagram": "Primary Hexagram",
+      "changingLines": "Changing Lines",
+      "noChangingLines": "No changing lines",
+      "relatingHexagram": "Relating Hexagram",
+      "noRelatingHexagram": "No relating hexagram",
+      "newConsultation": "New Consultation",
+      "viewHistory": "View History",
+      "addNotes": "Add Notes",
+      "saveNotes": "Save Notes"
+    }
+  },
+  "hexagram": {
+    "title": "Hexagram Library",
+    "subtitle": "The 64 Hexagrams of the I Ching",
+    "search": "Search hexagrams...",
+    "detail": {
+      "number": "Hexagram {{number}}",
+      "judgment": "Judgment",
+      "image": "Image",
+      "lines": "Lines",
+      "line": "Line {{number}}",
+      "back": "Back to Library"
+    }
+  },
+  "history": {
+    "title": "Consultation History",
+    "subtitle": "Your past consultations",
+    "filter": "Filter",
+    "filterByDate": "Filter by date",
+    "filterByHexagram": "Filter by hexagram",
+    "noConsultations": "No consultations found",
+    "viewDetails": "View Details",
+    "addNotes": "Add Notes",
+    "editNotes": "Edit Notes",
+    "deleteNotes": "Delete Notes",
+    "detail": {
+      "title": "Consultation Details",
+      "date": "Date",
+      "question": "Question",
+      "primaryHexagram": "Primary Hexagram",
+      "changingLines": "Changing Lines",
+      "relatingHexagram": "Relating Hexagram",
+      "notes": "Notes",
+      "noNotes": "No notes yet",
+      "back": "Back to History"
+    }
+  },
+  "profile": {
+    "title": "User Profile",
+    "email": "Email",
+    "preferredLanguage": "Preferred Language",
+    "changePassword": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "save": "Save Changes",
+    "success": "Profile updated successfully",
+    "error": "Failed to update profile"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "submit": "Submit",
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "minLength": "Must be at least {{length}} characters",
+    "maxLength": "Must be at most {{length}} characters"
+  },
+  "languages": {
+    "en": "English",
+    "ru": "Russian",
+    "zh": "Chinese"
+  }
+}
