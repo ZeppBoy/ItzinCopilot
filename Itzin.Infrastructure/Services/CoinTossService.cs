@@ -66,4 +66,14 @@ public class CoinTossService : ICoinTossService
             _ => throw new InvalidOperationException("Invalid toss result")
         };
     }
+
+    public List<string> GenerateThreeCoins()
+    {
+        var coins = new List<string>();
+        for (int i = 0; i < 3; i++)
+        {
+            coins.Add(TossCoin() == 0 ? "tails" : "heads");
+        }
+        return coins;
+    }
 }

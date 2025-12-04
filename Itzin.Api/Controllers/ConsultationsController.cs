@@ -14,13 +14,16 @@ namespace Itzin.Api.Controllers;
 public class ConsultationsController : ControllerBase
 {
     private readonly IConsultationService _consultationService;
+    private readonly ICoinTossService _coinTossService;
     private readonly ILogger<ConsultationsController> _logger;
 
     public ConsultationsController(
         IConsultationService consultationService,
+        ICoinTossService coinTossService,
         ILogger<ConsultationsController> logger)
     {
         _consultationService = consultationService;
+        _coinTossService = coinTossService;
         _logger = logger;
     }
 
@@ -87,16 +90,8 @@ public class ConsultationsController : ControllerBase
     [HttpPost("toss")]
     public ActionResult<CoinTossResponseDto> TossCoins([FromQuery] int tossNumber = 1)
     {
-        var random = new Random();
-        var coins = new List<CoinDto>();
-
-        for (int i = 0; i < 3; i++)
-        {
-            coins.Add(new CoinDto
-            {
-                Value = random.Next(2) == 0 ? "heads" : "tails"
-            });
-        }
+        var coinValues = _coinTossService.GenerateThreeCoins();
+        var coins = coinValues.Select(v => new CoinDto { Value = v }).ToList();
 
         // Calculate line value: heads=3, tails=2
         var lineValue = coins.Sum(c => c.Value == "heads" ? 3 : 2);
