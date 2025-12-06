@@ -18,7 +18,15 @@ export class ConsultationResult {
   @Input() consultation: Consultation | null = null;
 
   viewHexagram(id: number): void {
+    console.log('viewHexagram called with id:', id);
     this.router.navigate(['/hexagrams', id]);
+  }
+
+  onViewButtonClick(event: Event, id: number): void {
+    console.log('Button clicked! Event:', event, 'ID:', id);
+    event.stopPropagation();
+    event.preventDefault();
+    this.viewHexagram(id);
   }
 
   newConsultation(): void {

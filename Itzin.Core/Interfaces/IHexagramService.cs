@@ -4,6 +4,7 @@ namespace Itzin.Core.Interfaces;
 
 public interface IHexagramService
 {
+    Task<Hexagram?> GetHexagramByIdAsync(int id);
     Task<Hexagram?> GetHexagramByBinaryAsync(string binary);
     Task<Hexagram?> GetHexagramByNumberAsync(int number);
     Task<List<Hexagram>> GetAllHexagramsAsync();

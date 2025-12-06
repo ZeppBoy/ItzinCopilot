@@ -100,6 +100,8 @@
     font-weight: 600;
     cursor: pointer;
     transition: background 0.3s;
+    position: relative;
+    z-index: 10;
 
     &:hover {
       background: #a01829;

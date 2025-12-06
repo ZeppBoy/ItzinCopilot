@@ -43,7 +43,7 @@ public class HexagramsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<HexagramDto>> GetById(int id, [FromQuery] string? language = "en")
     {
-        var hexagram = await _hexagramService.GetHexagramByNumberAsync(id);
+        var hexagram = await _hexagramService.GetHexagramByIdAsync(id);
         
         if (hexagram == null)
             return NotFound(new { message = "Hexagram not found" });

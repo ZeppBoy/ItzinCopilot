@@ -37,13 +37,14 @@ export class ConsultationFlow {
 
     const tossResults = this.consultationService.getTossResults();
     const tossValues = tossResults.map(r => r.lineValue);
-    
+
     let question: string | undefined;
     this.consultationService.currentQuestion$.subscribe(q => question = q || undefined).unsubscribe();
 
     this.consultationService.createConsultation({
       question,
-      tossResults: tossValues
+      tossResults: tossValues,
+      language: 'en'
     }).subscribe({
       next: (consultation) => {
         this.consultation = consultation;

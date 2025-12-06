@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HexagramService } from '../../../core/services/hexagram.service';
 import { Hexagram } from '../../../core/models/hexagram.model';
@@ -15,6 +15,7 @@ export class HexagramDetail implements OnInit {
   private hexagramService = inject(HexagramService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private location = inject(Location);
 
   hexagram: Hexagram | null = null;
   isLoading: boolean = true;
@@ -49,7 +50,7 @@ export class HexagramDetail implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/hexagrams']);
+    this.location.back();
   }
 
   getLineSymbol(type: 'yin' | 'yang'): string {

@@ -12,6 +12,11 @@ public class HexagramService : IHexagramService
         _hexagramRepository = hexagramRepository;
     }
 
+    public async Task<Hexagram?> GetHexagramByIdAsync(int id)
+    {
+        return await _hexagramRepository.GetByIdAsync(id);
+    }
+
     public async Task<Hexagram?> GetHexagramByBinaryAsync(string binary)
     {
         return await _hexagramRepository.GetByBinaryAsync(binary);

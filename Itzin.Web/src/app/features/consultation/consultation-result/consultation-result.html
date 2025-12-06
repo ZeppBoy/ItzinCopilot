@@ -1,7 +1,7 @@
 <div class="result-container">
   <div class="result-card">
     <h2>Your Hexagram</h2>
-    
+
     @if (consultation) {
       <div class="result-content">
         @if (consultation.question) {
@@ -13,15 +13,15 @@
 
         <div class="hexagram-section">
           <h3>Primary Hexagram</h3>
-          <div class="hexagram-card" (click)="viewHexagram(consultation.primaryHexagramId)">
-            <div class="hexagram-number">{{ consultation.primaryHexagram?.number }}</div>
-            <div class="hexagram-name-chinese">{{ consultation.primaryHexagram?.chineseName }}</div>
-            <div class="hexagram-name">{{ consultation.primaryHexagram?.englishName }}</div>
-            <button class="btn-view">View Full Interpretation →</button>
+          <div class="hexagram-card" (click)="viewHexagram(consultation.primaryHexagram.id)">
+            <div class="hexagram-number">{{ consultation.primaryHexagram.number }}</div>
+            <div class="hexagram-name-chinese">{{ consultation.primaryHexagram.chineseName }}</div>
+            <div class="hexagram-name">{{ consultation.primaryHexagram.englishName }}</div>
+            <button type="button" class="btn-view" (click)="onViewButtonClick($event, consultation.primaryHexagram.id)">View Full Interpretation →</button>
           </div>
         </div>
 
-        @if (consultation.relatingHexagramId && consultation.changingLines.length > 0) {
+        @if (consultation.relatingHexagram && consultation.changingLines && consultation.changingLines.length > 0) {
           <div class="changing-lines-section">
             <h3>Changing Lines</h3>
             <p class="changing-info">
@@ -31,11 +31,11 @@
 
           <div class="hexagram-section">
             <h3>Relating Hexagram</h3>
-            <div class="hexagram-card" (click)="viewHexagram(consultation.relatingHexagramId)">
-              <div class="hexagram-number">{{ consultation.relatingHexagram?.number }}</div>
-              <div class="hexagram-name-chinese">{{ consultation.relatingHexagram?.chineseName }}</div>
-              <div class="hexagram-name">{{ consultation.relatingHexagram?.englishName }}</div>
-              <button class="btn-view">View Full Interpretation →</button>
+            <div class="hexagram-card" (click)="viewHexagram(consultation.relatingHexagram.id)">
+              <div class="hexagram-number">{{ consultation.relatingHexagram.number }}</div>
+              <div class="hexagram-name-chinese">{{ consultation.relatingHexagram.chineseName }}</div>
+              <div class="hexagram-name">{{ consultation.relatingHexagram.englishName }}</div>
+              <button type="button" class="btn-view" (click)="onViewButtonClick($event, consultation.relatingHexagram.id)">View Full Interpretation →</button>
             </div>
           </div>
         }

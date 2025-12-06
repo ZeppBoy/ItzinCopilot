@@ -1,14 +1,25 @@
 export interface Consultation {
   id: number;
-  userId: number;
   question?: string;
-  primaryHexagramId: number;
-  relatingHexagramId?: number;
-  changingLines: number[];
-  createdAt: Date;
+  consultationDate: Date;
+  primaryHexagram: HexagramInfo;
+  relatingHexagram?: HexagramInfo;
+  changingLines?: number[];
+  tossValues: number[];
   notes?: string;
-  primaryHexagram?: any;
-  relatingHexagram?: any;
+}
+
+export interface HexagramInfo {
+  id: number;
+  number: number;
+  chineseName: string;
+  pinyin: string;
+  englishName: string;
+  russianName: string;
+  unicode: string;
+  judgment?: string;
+  image?: string;
+  lines?: string[];
 }
 
 export interface CoinTossResult {
@@ -26,6 +37,7 @@ export interface CoinResult {
 export interface CreateConsultationRequest {
   question?: string;
   tossResults: number[];
+  language?: string;
 }
 
 export interface ConsultationResult {
