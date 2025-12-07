@@ -25,6 +25,7 @@ builder.Services.AddDbContext<ItzinDbContext>(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IHexagramRepository, HexagramRepository>();
+builder.Services.AddScoped<IHexagramRuDescriptionRepository, HexagramRuDescriptionRepository>();
 builder.Services.AddScoped<IConsultationRepository, ConsultationRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICoinTossService, CoinTossService>();

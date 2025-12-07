@@ -12,6 +12,7 @@ public class ItzinDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Hexagram> Hexagrams { get; set; }
     public DbSet<Consultation> Consultations { get; set; }
+    public DbSet<HexagramRuDescription> HexagramRuDescriptions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -63,6 +64,21 @@ public class ItzinDbContext : DbContext
                 .WithMany(h => h.RelatingConsultations)
                 .HasForeignKey(e => e.RelatingHexagramId)
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<HexagramRuDescription>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.HasIndex(e => e.HexagramId).IsUnique();
+            entity.Property(e => e.Short).HasMaxLength(500);
+            entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.ImageRow).HasMaxLength(500);
+            entity.Property(e => e.Symbol).HasMaxLength(100);
+            
+            entity.HasOne(e => e.Hexagram)
+                .WithOne(h => h.RuDescription)
+                .HasForeignKey<HexagramRuDescription>(e => e.HexagramId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

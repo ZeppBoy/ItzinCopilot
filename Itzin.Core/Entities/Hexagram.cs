@@ -31,4 +31,7 @@ public class Hexagram
     
     public ICollection<Consultation> PrimaryConsultations { get; set; } = new List<Consultation>();
     public ICollection<Consultation> RelatingConsultations { get; set; } = new List<Consultation>();
+    
+    // Navigation property for Russian descriptions
+    public HexagramRuDescription? RuDescription { get; set; }
 }
