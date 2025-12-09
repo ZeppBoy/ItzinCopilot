@@ -16,17 +16,23 @@ public class HexagramRepository : IHexagramRepository
 
     public async Task<Hexagram?> GetByIdAsync(int id)
     {
-        return await _context.Hexagrams.FindAsync(id);
+        return await _context.Hexagrams
+            .Include(h => h.RuDescription)
+            .FirstOrDefaultAsync(h => h.Id == id);
     }
 
     public async Task<Hexagram?> GetByNumberAsync(int number)
     {
-        return await _context.Hexagrams.FirstOrDefaultAsync(h => h.Number == number);
+        return await _context.Hexagrams
+            .Include(h => h.RuDescription)
+            .FirstOrDefaultAsync(h => h.Number == number);
     }
 
     public async Task<Hexagram?> GetByBinaryAsync(string binary)
     {
-        return await _context.Hexagrams.FirstOrDefaultAsync(h => h.Binary == binary);
+        return await _context.Hexagrams
+            .Include(h => h.RuDescription)
+            .FirstOrDefaultAsync(h => h.Binary == binary);
     }
 
     public async Task<List<Hexagram>> GetAllAsync()

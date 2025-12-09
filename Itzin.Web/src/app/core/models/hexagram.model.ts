@@ -5,21 +5,32 @@ export interface Hexagram {
   pinyin: string;
   englishName: string;
   russianName: string;
-  trigrams: {
+  unicode?: string;
+  judgment?: string;
+  image?: string;
+  lines?: string[];
+  trigrams?: {
     upper: string;
     lower: string;
   };
-  judgment: {
-    chinese?: string;
-    english: string;
-    russian: string;
-  };
-  image: {
-    chinese?: string;
-    english: string;
-    russian: string;
-  };
-  lines: HexagramLine[];
+  ruDescription?: HexagramRuDescription;
+}
+
+export interface HexagramRuDescription {
+  short: string;
+  name: string;
+  imageRow: string;
+  description: string;
+  innerOuterWorlds: string;
+  definition: string;
+  symbol: string;
+  line1: string;
+  line2: string;
+  line3: string;
+  line4: string;
+  line5: string;
+  line6: string;
+  lineBonus: string;
 }
 
 export interface HexagramLine {

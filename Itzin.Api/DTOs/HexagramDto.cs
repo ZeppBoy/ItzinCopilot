@@ -12,6 +12,27 @@ public class HexagramDto
     public string Judgment { get; set; } = string.Empty;
     public string Image { get; set; } = string.Empty;
     public List<string> Lines { get; set; } = new();
+    
+    // Russian Description fields
+    public HexagramRuDescriptionDto? RuDescription { get; set; }
+}
+
+public class HexagramRuDescriptionDto
+{
+    public string Short { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string ImageRow { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string InnerOuterWorlds { get; set; } = string.Empty;
+    public string Definition { get; set; } = string.Empty;
+    public string Symbol { get; set; } = string.Empty;
+    public string Line1 { get; set; } = string.Empty;
+    public string Line2 { get; set; } = string.Empty;
+    public string Line3 { get; set; } = string.Empty;
+    public string Line4 { get; set; } = string.Empty;
+    public string Line5 { get; set; } = string.Empty;
+    public string Line6 { get; set; } = string.Empty;
+    public string LineBonus { get; set; } = string.Empty;
 }
 
 public class HexagramListDto

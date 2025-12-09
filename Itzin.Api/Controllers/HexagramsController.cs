@@ -11,13 +11,16 @@ namespace Itzin.Api.Controllers;
 public class HexagramsController : ControllerBase
 {
     private readonly IHexagramService _hexagramService;
+    private readonly IHexagramRuDescriptionRepository _ruDescriptionRepository;
     private readonly ILogger<HexagramsController> _logger;
 
     public HexagramsController(
         IHexagramService hexagramService,
+        IHexagramRuDescriptionRepository ruDescriptionRepository,
         ILogger<HexagramsController> logger)
     {
         _hexagramService = hexagramService;
+        _ruDescriptionRepository = ruDescriptionRepository;
         _logger = logger;
     }
 
@@ -64,11 +67,38 @@ public class HexagramsController : ControllerBase
         return Ok(dto);
     }
 
+    [HttpGet("ru-descriptions")]
+    public async Task<ActionResult> GetRuDescriptions()
+    {
+        var descriptions = await _ruDescriptionRepository.GetAllAsync();
+        return Ok(new { 
+            count = descriptions.Count,
+            data = descriptions.Select(d => new { 
+                d.Id, 
+                d.HexagramId, 
+                d.Name, 
+                d.Symbol,
+                ShortPreview = d.Short.Length > 50 ? d.Short.Substring(0, 50) + "..." : d.Short
+            })
+        });
+    }
+
+    [HttpGet("ru-descriptions/{hexagramId}")]
+    public async Task<ActionResult> GetRuDescriptionByHexagramId(int hexagramId)
+    {
+        var description = await _ruDescriptionRepository.GetByHexagramIdAsync(hexagramId);
+        
+        if (description == null)
+            return NotFound(new { message = "Russian description not found for this hexagram" });
+
+        return Ok(description);
+    }
+
     private HexagramDto MapToDto(Hexagram hexagram, string language)
     {
         var isRussian = language.ToLower() == "ru";
         
-        return new HexagramDto
+        var dto = new HexagramDto
         {
             Id = hexagram.Id,
             Number = hexagram.Number,
@@ -89,5 +119,29 @@ public class HexagramsController : ControllerBase
                 isRussian ? hexagram.Line6Ru : hexagram.Line6En
             }
         };
+
+        // Include Russian description if available and language is Russian
+        if (isRussian && hexagram.RuDescription != null)
+        {
+            dto.RuDescription = new HexagramRuDescriptionDto
+            {
+                Short = hexagram.RuDescription.Short,
+                Name = hexagram.RuDescription.Name,
+                ImageRow = hexagram.RuDescription.ImageRow,
+                Description = hexagram.RuDescription.Description,
+                InnerOuterWorlds = hexagram.RuDescription.InnerOuterWorlds,
+                Definition = hexagram.RuDescription.Definition,
+                Symbol = hexagram.RuDescription.Symbol,
+                Line1 = hexagram.RuDescription.Line1,
+                Line2 = hexagram.RuDescription.Line2,
+                Line3 = hexagram.RuDescription.Line3,
+                Line4 = hexagram.RuDescription.Line4,
+                Line5 = hexagram.RuDescription.Line5,
+                Line6 = hexagram.RuDescription.Line6,
+                LineBonus = hexagram.RuDescription.LineBonus
+            };
+        }
+
+        return dto;
     }
 }

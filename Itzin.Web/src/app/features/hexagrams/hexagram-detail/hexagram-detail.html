@@ -16,65 +16,165 @@
   @if (!isLoading && hexagram) {
     <div class="hexagram-detail">
       <div class="detail-header">
-        <button class="btn-back" (click)="goBack()">← Back</button>
+        <button class="btn-back" (click)="goBack()">← Назад</button>
+        <button class="btn-language" (click)="toggleLanguage()">
+          {{ currentLanguage === 'ru' ? 'EN' : 'RU' }}
+        </button>
         <div class="header-content">
-          <div class="hexagram-number">Hexagram {{ hexagram.number }}</div>
+          <div class="hexagram-number">Гексаграмма {{ hexagram.number }}</div>
           <h1 class="hexagram-chinese">{{ hexagram.chineseName }}</h1>
           <div class="hexagram-pinyin">{{ hexagram.pinyin }}</div>
-          <h2 class="hexagram-name">{{ hexagram.englishName }}</h2>
+          @if (currentLanguage === 'ru' && hexagram.ruDescription) {
+            <h2 class="hexagram-name">{{ hexagram.ruDescription.name }}</h2>
+          } @else {
+            <h2 class="hexagram-name">{{ hexagram.russianName || hexagram.englishName }}</h2>
+          }
         </div>
       </div>
 
       <div class="hexagram-body">
-        <div class="hexagram-visual">
-          <div class="hexagram-lines">
-            @for (line of hexagram.lines; track line.position) {
-              <div class="line" [class.yang]="line.type === 'yang'" [class.yin]="line.type === 'yin'">
-                {{ getLineSymbol(line.type) }}
-              </div>
+        @if (currentLanguage === 'ru' && hexagram.ruDescription) {
+          <!-- Russian Description Content -->
+          <div class="hexagram-content">
+            @if (hexagram.ruDescription.short) {
+              <section class="interpretation-section">
+                <h3>Краткое описание</h3>
+                <div class="interpretation-text">
+                  <p>{{ hexagram.ruDescription.short }}</p>
+                </div>
+              </section>
             }
-          </div>
-          <div class="trigrams">
-            <div class="trigram">
-              <span class="label">Upper:</span>
-              <span class="value">{{ hexagram.trigrams.upper }}</span>
-            </div>
-            <div class="trigram">
-              <span class="label">Lower:</span>
-              <span class="value">{{ hexagram.trigrams.lower }}</span>
-            </div>
-          </div>
-        </div>
 
-        <div class="hexagram-content">
-          <section class="interpretation-section">
-            <h3>The Judgment</h3>
-            <div class="interpretation-text">
-              <p>{{ hexagram.judgment.english }}</p>
-            </div>
-          </section>
+            @if (hexagram.ruDescription.symbol) {
+              <section class="interpretation-section">
+                <h3>Символ</h3>
+                <div class="interpretation-text">
+                  <p>{{ hexagram.ruDescription.symbol }}</p>
+                </div>
+              </section>
+            }
 
-          <section class="interpretation-section">
-            <h3>The Image</h3>
-            <div class="interpretation-text">
-              <p>{{ hexagram.image.english }}</p>
-            </div>
-          </section>
+            @if (hexagram.ruDescription.imageRow) {
+              <section class="interpretation-section">
+                <h3>Образ</h3>
+                <div class="interpretation-text">
+                  <p>{{ hexagram.ruDescription.imageRow }}</p>
+                </div>
+              </section>
+            }
 
-          @if (hexagram.lines && hexagram.lines.length > 0) {
+            @if (hexagram.ruDescription.description) {
+              <section class="interpretation-section">
+                <h3>Описание</h3>
+                <div class="interpretation-text">
+                  <p>{{ hexagram.ruDescription.description }}</p>
+                </div>
+              </section>
+            }
+
+            @if (hexagram.ruDescription.definition) {
+              <section class="interpretation-section">
+                <h3>Определение</h3>
+                <div class="interpretation-text">
+                  <p>{{ hexagram.ruDescription.definition }}</p>
+                </div>
+              </section>
+            }
+
+            @if (hexagram.ruDescription.innerOuterWorlds) {
+              <section class="interpretation-section">
+                <h3>Внутренний и внешний миры</h3>
+                <div class="interpretation-text">
+                  <p>{{ hexagram.ruDescription.innerOuterWorlds }}</p>
+                </div>
+              </section>
+            }
+
+            <!-- Russian Lines -->
             <section class="interpretation-section">
-              <h3>The Lines</h3>
+              <h3>Черты</h3>
               <div class="lines-list">
-                @for (line of hexagram.lines; track line.position) {
+                @if (hexagram.ruDescription.line1) {
                   <div class="line-interpretation">
-                    <h4>Line {{ line.position }}</h4>
-                    <p>{{ line.interpretation.english }}</p>
+                    <h4>Черта 1</h4>
+                    <p>{{ hexagram.ruDescription.line1 }}</p>
+                  </div>
+                }
+                @if (hexagram.ruDescription.line2) {
+                  <div class="line-interpretation">
+                    <h4>Черта 2</h4>
+                    <p>{{ hexagram.ruDescription.line2 }}</p>
+                  </div>
+                }
+                @if (hexagram.ruDescription.line3) {
+                  <div class="line-interpretation">
+                    <h4>Черта 3</h4>
+                    <p>{{ hexagram.ruDescription.line3 }}</p>
+                  </div>
+                }
+                @if (hexagram.ruDescription.line4) {
+                  <div class="line-interpretation">
+                    <h4>Черта 4</h4>
+                    <p>{{ hexagram.ruDescription.line4 }}</p>
+                  </div>
+                }
+                @if (hexagram.ruDescription.line5) {
+                  <div class="line-interpretation">
+                    <h4>Черта 5</h4>
+                    <p>{{ hexagram.ruDescription.line5 }}</p>
+                  </div>
+                }
+                @if (hexagram.ruDescription.line6) {
+                  <div class="line-interpretation">
+                    <h4>Черта 6</h4>
+                    <p>{{ hexagram.ruDescription.line6 }}</p>
+                  </div>
+                }
+                @if (hexagram.ruDescription.lineBonus) {
+                  <div class="line-interpretation">
+                    <h4>Дополнительные указания</h4>
+                    <p>{{ hexagram.ruDescription.lineBonus }}</p>
                   </div>
                 }
               </div>
             </section>
-          }
-        </div>
+          </div>
+        } @else {
+          <!-- English Content (fallback) -->
+          <div class="hexagram-content">
+            @if (hexagram.judgment) {
+              <section class="interpretation-section">
+                <h3>The Judgment</h3>
+                <div class="interpretation-text">
+                  <p>{{ hexagram.judgment }}</p>
+                </div>
+              </section>
+            }
+
+            @if (hexagram.image) {
+              <section class="interpretation-section">
+                <h3>The Image</h3>
+                <div class="interpretation-text">
+                  <p>{{ hexagram.image }}</p>
+                </div>
+              </section>
+            }
+
+            @if (hexagram.lines && hexagram.lines.length > 0) {
+              <section class="interpretation-section">
+                <h3>The Lines</h3>
+                <div class="lines-list">
+                  @for (line of hexagram.lines; track $index) {
+                    <div class="line-interpretation">
+                      <h4>Line {{ $index + 1 }}</h4>
+                      <p>{{ line }}</p>
+                    </div>
+                  }
+                </div>
+              </section>
+            }
+          </div>
+        }
       </div>
     </div>
   }

@@ -20,7 +20,7 @@ export class HexagramDetail implements OnInit {
   hexagram: Hexagram | null = null;
   isLoading: boolean = true;
   errorMessage: string = '';
-  currentLanguage: 'en' | 'ru' = 'en';
+  currentLanguage: 'en' | 'ru' = 'ru'; // Changed to Russian by default
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
@@ -40,6 +40,7 @@ export class HexagramDetail implements OnInit {
       next: (hexagram) => {
         this.hexagram = hexagram;
         this.isLoading = false;
+        console.log('Loaded hexagram with RuDescription:', hexagram);
       },
       error: (error) => {
         this.errorMessage = 'Failed to load hexagram. Please try again.';
@@ -47,6 +48,13 @@ export class HexagramDetail implements OnInit {
         console.error('Error loading hexagram:', error);
       }
     });
+  }
+
+  toggleLanguage(): void {
+    this.currentLanguage = this.currentLanguage === 'en' ? 'ru' : 'en';
+    if (this.hexagram) {
+      this.loadHexagram(this.hexagram.id);
+    }
   }
 
   goBack(): void {
