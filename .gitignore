@@ -382,3 +382,7 @@ logs/
 .Trashes
 ehthumbs.db
 Thumbs.db
+# Python virtual environments
+scraper_env/
+venv/
+.venv/
