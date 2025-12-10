@@ -17,6 +17,10 @@ export class ConsultationService {
   private currentQuestionSubject = new BehaviorSubject<string>('');
   public currentQuestion$ = this.currentQuestionSubject.asObservable();
 
+  // Store current consultation for navigation back from hexagram detail
+  private currentConsultationSubject = new BehaviorSubject<Consultation | null>(null);
+  public currentConsultation$ = this.currentConsultationSubject.asObservable();
+
   setQuestion(question: string): void {
     this.currentQuestionSubject.next(question);
   }
@@ -29,10 +33,24 @@ export class ConsultationService {
   clearTossResults(): void {
     this.tossResultsSubject.next([]);
     this.currentQuestionSubject.next('');
+    // Clear current consultation when starting new one
+    this.currentConsultationSubject.next(null);
   }
 
   getTossResults(): CoinTossResult[] {
     return this.tossResultsSubject.value;
+  }
+
+  setCurrentConsultation(consultation: Consultation): void {
+    this.currentConsultationSubject.next(consultation);
+  }
+
+  getCurrentConsultation(): Consultation | null {
+    return this.currentConsultationSubject.value;
+  }
+
+  clearCurrentConsultation(): void {
+    this.currentConsultationSubject.next(null);
   }
 
   createConsultation(request: CreateConsultationRequest): Observable<Consultation> {

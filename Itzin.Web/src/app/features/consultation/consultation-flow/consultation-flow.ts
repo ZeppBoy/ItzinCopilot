@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ConsultationService } from '../../../core/services/consultation.service';
@@ -14,7 +14,7 @@ import { Consultation } from '../../../core/models/consultation.model';
   templateUrl: './consultation-flow.html',
   styleUrl: './consultation-flow.scss',
 })
-export class ConsultationFlow {
+export class ConsultationFlow implements OnInit {
   private consultationService = inject(ConsultationService);
   private router = inject(Router);
 
@@ -22,6 +22,15 @@ export class ConsultationFlow {
   consultation: Consultation | null = null;
   isCreating = false;
   errorMessage = '';
+
+  ngOnInit(): void {
+    // Check if there's a saved consultation to restore
+    const savedConsultation = this.consultationService.getCurrentConsultation();
+    if (savedConsultation) {
+      this.consultation = savedConsultation;
+      this.currentStep = 'result';
+    }
+  }
 
   onQuestionSubmitted(question: string): void {
     this.currentStep = 'toss';
@@ -50,6 +59,8 @@ export class ConsultationFlow {
         this.consultation = consultation;
         this.currentStep = 'result';
         this.isCreating = false;
+        // Save consultation to service so it can be restored
+        this.consultationService.setCurrentConsultation(consultation);
       },
       error: (error) => {
         this.errorMessage = 'Failed to create consultation. Please try again.';
