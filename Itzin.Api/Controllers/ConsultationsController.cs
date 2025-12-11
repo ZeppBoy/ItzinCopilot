@@ -33,6 +33,8 @@ public class ConsultationsController : ControllerBase
         var userId = GetUserId();
         var language = request.Language ?? "en";
 
+        //request.TossResults.Reverse();
+        
         var consultation = await _consultationService.CreateConsultationWithTossesAsync(
             userId, 
             request.Question ?? string.Empty, 
@@ -45,6 +47,29 @@ public class ConsultationsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = consultation.Id }, dto);
     }
 
+    [AllowAnonymous]
+    [HttpPost("/test")]
+    public async Task<ActionResult<ConsultationResponseDto>> Create2([FromBody] CreateConsultationDto request)
+    {
+        //var userId = GetUserId();
+        var language = request.Language ?? "en";
+
+        //request.TossResults.Reverse();
+        
+        var consultation = await _consultationService.CreateConsultationWithTossesAsync(
+            // userId,
+            1,
+            request.Question ?? string.Empty, 
+            request.TossResults, 
+            language);
+
+       // _logger.LogInformation("Consultation created for user {UserId}", userId);
+
+        var dto = MapToResponseDto(consultation, language);
+        return CreatedAtAction(nameof(GetById), new { id = consultation.Id }, dto);
+    }
+    
+    
     [HttpGet("{id}")]
     public async Task<ActionResult<ConsultationResponseDto>> GetById(int id, [FromQuery] string? language = "en")
     {

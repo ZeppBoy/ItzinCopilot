@@ -59,10 +59,8 @@ public class HexagramService : IHexagramService
             };
         }
         
-        //binary=  (char[])binary.Reverse();
-       // return new string(binary);
+        //return new string(binary);
         return new string(binary.Reverse().ToArray());
-       
     }
 
     public List<int> GetChangingLines(List<int> tossValues)
@@ -75,6 +73,7 @@ public class HexagramService : IHexagramService
             if (tossValues[i] == 6 || tossValues[i] == 9)
             {
                 changingLines.Add(i + 1); // Line numbers are 1-indexed
+                //changingLines.Add(i);
             }
         }
         
@@ -85,17 +84,21 @@ public class HexagramService : IHexagramService
     {
         if (changingLines.Count == 0)
             return primaryBinary; // No changing lines, no relating hexagram
-
-        var binary = primaryBinary.ToCharArray();
         
+        var binary = primaryBinary.ToCharArray();
+        Array.Reverse(binary);  
+       
         foreach (var lineNumber in changingLines)
         {
-            var index = lineNumber - 1; // Convert to 0-indexed
-            
-            // Flip the line: 0 -> 1, 1 -> 0
-            binary[index] = binary[index] == '1' ? '0' : '1';
+             var index = lineNumber - 1; // Convert to 0-indexed
+            // // Flip the line: 0 -> 1, 1 -> 0
+             binary[index] = binary[index] == '1' ? '0' : '1';
+            //binary[lineNumber] = binary[lineNumber] == '1' ? '0' : '1';
         }
         
-        return new string(binary);
+        return new string(binary.Reverse().ToArray());
+        
+        //return new string(binary);
+        
     }
 }

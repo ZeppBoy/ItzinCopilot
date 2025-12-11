@@ -28,6 +28,9 @@ public class ConsultationService : IConsultationService
 
     public async Task<Consultation> CreateConsultationWithTossesAsync(int userId, string question, List<int> tossResults, string language)
     {
+        // if (tossResults != null && tossResults.Count > 0)
+        //     tossResults.Reverse();
+        
         // Calculate primary hexagram
         var primaryBinary = _hexagramService.CalculateHexagramBinary(tossResults);
         var primaryHexagram = await _hexagramService.GetHexagramByBinaryAsync(primaryBinary);
