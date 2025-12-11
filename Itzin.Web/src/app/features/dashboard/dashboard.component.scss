@@ -6,7 +6,7 @@
 .dashboard-header {
   background: linear-gradient(135deg, #c41e3a 0%, #a01829 100%);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  
+
   .header-content {
     max-width: 1400px;
     margin: 0 auto;
@@ -93,7 +93,6 @@
   border-radius: 12px;
   padding: 40px;
   text-align: center;
-  cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   border: 2px solid transparent;
@@ -106,13 +105,6 @@
 
   &.coming-soon {
     opacity: 0.6;
-    cursor: default;
-
-    &:hover {
-      transform: none;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      border-color: transparent;
-    }
   }
 
   .card-icon {
