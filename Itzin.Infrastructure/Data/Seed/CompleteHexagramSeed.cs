@@ -110,7 +110,7 @@ public static class CompleteHexagramSeed
                 "Thunder in the middle of the lake: The image of FOLLOWING.",
                 "Гром в середине озера: образ СЛЕДОВАНИЯ."),
             
-            CreateHexagram(18, "蠱", "Gǔ", "Work on the Decayed", "Исправление порчи", "100011", "䷑", 4, 5,
+            CreateHexagram(18, "蠱", "Gǔ", "Work on the Decayed", "Исправление порчи", "100110", "䷑", 4, 5,
                 "WORK ON WHAT HAS BEEN SPOILED Has supreme success. It furthers one to cross the great water.",
                 "РАБОТА НАД ТЕМ, ЧТО ИСПОРЧЕНО, имеет высший успех. Благоприятно пересечь великую воду.",
                 "The wind blows low on the mountain: The image of DECAY.",

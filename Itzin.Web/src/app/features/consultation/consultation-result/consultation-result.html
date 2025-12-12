@@ -59,7 +59,7 @@
                   <div class="hexagram-number-badge">{{ consultation.relatingHexagram.number }}</div>
                   <div class="hexagram-symbol">{{ consultation.relatingHexagram.unicode }}</div>
                   <div class="hexagram-lines">
-                    @for (line of getRelatingHexagramLines(); track line.lineNumber) {
+                    @for (line of getRelatingHexagramLines().reverse(); track line.lineNumber) {
                       <div class="hexagram-line">
                         <img [src]="getLineImagePath(line)" [alt]="line.type + ' line'" />
                       </div>
