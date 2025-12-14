@@ -19,18 +19,15 @@ public class ConsultationService : IConsultationService
         _hexagramService = hexagramService;
     }
 
-    public async Task<Consultation> CreateConsultationAsync(int userId, string question, string language)
+    public async Task<Consultation> CreateConsultationAsync(int userId, string question, string language, bool isAdvanced = false)
     {
         // Perform coin tosses (6 times, 3 coins each time)
         var tossValues = _coinTossService.TossCoins(6);
-        return await CreateConsultationWithTossesAsync(userId, question, tossValues, language);
+        return await CreateConsultationWithTossesAsync(userId, question, tossValues, language, isAdvanced);
     }
 
-    public async Task<Consultation> CreateConsultationWithTossesAsync(int userId, string question, List<int> tossResults, string language)
+    public async Task<Consultation> CreateConsultationWithTossesAsync(int userId, string question, List<int> tossResults, string language, bool isAdvanced = false)
     {
-        // if (tossResults != null && tossResults.Count > 0)
-        //     tossResults.Reverse();
-        
         // Calculate primary hexagram
         var primaryBinary = _hexagramService.CalculateHexagramBinary(tossResults);
         var primaryHexagram = await _hexagramService.GetHexagramByBinaryAsync(primaryBinary);
@@ -59,8 +56,15 @@ public class ConsultationService : IConsultationService
             PrimaryHexagramId = primaryHexagram.Id,
             RelatingHexagramId = relatingHexagram?.Id,
             ChangingLines = changingLines.Count > 0 ? string.Join(",", changingLines) : null,
-            ConsultationDate = DateTime.UtcNow
+            ConsultationDate = DateTime.UtcNow,
+            IsAdvanced = isAdvanced
         };
+
+        // If advanced consultation, calculate additional hexagrams
+        if (isAdvanced)
+        {
+            await CalculateAdvancedHexagrams(consultation, primaryBinary, changingLines);
+        }
 
         return await _consultationRepository.CreateAsync(consultation);
     }
@@ -91,4 +95,120 @@ public class ConsultationService : IConsultationService
         consultation.Notes = notes;
         await _consultationRepository.UpdateAsync(consultation);
     }
+
+    #region Advanced Consultation Methods
+
+    /// <summary>
+    /// Calculates additional hexagrams for advanced consultation
+    /// </summary>
+    private async Task CalculateAdvancedHexagrams(Consultation consultation, string primaryBinary, List<int> changingLines)
+    {
+        // Calculate Anti-Hexagram (opposite of primary hexagram)
+        consultation.AntiHexagramId = await CalculateAntiHexagram(primaryBinary);
+
+        // Calculate Changing Hexagram (if there are changing lines)
+        if (changingLines.Count > 0)
+        {
+            consultation.ChangingHexagramId = await CalculateChangingHexagram(primaryBinary, changingLines);
+        }
+
+        // Calculate Additional Changing Hexagrams (progressive changes)
+        var additionalHexagrams = await CalculateAdditionalChangingHexagrams(primaryBinary, changingLines);
+        if (additionalHexagrams.Count > 0)
+        {
+            consultation.AdditionalChangingHexagrams = string.Join(",", additionalHexagrams);
+        }
+    }
+
+    /// <summary>
+    /// Calculates the Anti-Hexagram (opposite/inverse of primary hexagram)
+    /// All lines are flipped: Yang becomes Yin, Yin becomes Yang
+    /// </summary>
+    private async Task<int?> CalculateAntiHexagram(string primaryBinary)
+    {
+        // TODO: Implement anti-hexagram calculation
+        // Flip all bits: 0 -> 1, 1 -> 0
+        // Example: "111000" -> "000111"
+        
+        var antiHexagramBinary = FlipBinaryString(primaryBinary);
+        var antiHexagram = await _hexagramService.GetHexagramByBinaryAsync(antiHexagramBinary);
+        return antiHexagram?.Id;
+    }
+
+    /// <summary>
+    /// Calculates the Changing Hexagram based on specific changing lines
+    /// This might represent the hexagram with only certain lines changed
+    /// </summary>
+    private async Task<int?> CalculateChangingHexagram(string primaryBinary, List<int> changingLines)
+    {
+        // TODO: Implement changing hexagram calculation
+        // This could represent a specific transformation pattern
+        // For now, returning null as placeholder
+        
+        // Example implementation idea:
+        // - Apply changes to only the first changing line
+        // - Or apply a specific pattern of changes
+        
+        return null;
+    }
+
+    /// <summary>
+    /// Calculates a list of additional hexagrams representing progressive changes
+    /// Could represent intermediate states or alternative interpretations
+    /// </summary>
+    private async Task<List<int>> CalculateAdditionalChangingHexagrams(string primaryBinary, List<int> changingLines)
+    {
+        // TODO: Implement additional changing hexagrams calculation
+        // This could represent:
+        // - Each changing line applied individually
+        // - Combinations of changing lines
+        // - Progressive transformations
+        
+        var additionalHexagrams = new List<int>();
+
+        // Example placeholder: Calculate hexagram for each individual changing line
+        foreach (var linePosition in changingLines)
+        {
+            var hexagramBinary = ApplySingleLineChange(primaryBinary, linePosition);
+            var hexagram = await _hexagramService.GetHexagramByBinaryAsync(hexagramBinary);
+            if (hexagram != null && hexagram.Id != 0)
+            {
+                additionalHexagrams.Add(hexagram.Id);
+            }
+        }
+
+        return additionalHexagrams;
+    }
+
+    #endregion
+
+    #region Helper Methods
+
+    /// <summary>
+    /// Flips all bits in a binary string (0 -> 1, 1 -> 0)
+    /// </summary>
+    private string FlipBinaryString(string binary)
+    {
+        return new string(binary.Select(c => c == '0' ? '1' : '0').ToArray());
+    }
+
+    /// <summary>
+    /// Applies a single line change to a binary string at the specified position
+    /// </summary>
+    private string ApplySingleLineChange(string binary, int linePosition)
+    {
+        // Line positions are 1-indexed from bottom
+        // Binary string is 0-indexed from left
+        var charArray = binary.ToCharArray();
+        var index = linePosition - 1;
+        
+        if (index >= 0 && index < charArray.Length)
+        {
+            charArray[index] = charArray[index] == '0' ? '1' : '0';
+        }
+        
+        return new string(charArray);
+    }
+
+    #endregion
 }

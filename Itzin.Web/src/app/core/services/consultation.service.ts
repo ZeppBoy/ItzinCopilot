@@ -21,8 +21,20 @@ export class ConsultationService {
   private currentConsultationSubject = new BehaviorSubject<Consultation | null>(null);
   public currentConsultation$ = this.currentConsultationSubject.asObservable();
 
+  // Store advanced consultation flag
+  private isAdvancedSubject = new BehaviorSubject<boolean>(false);
+  public isAdvanced$ = this.isAdvancedSubject.asObservable();
+
   setQuestion(question: string): void {
     this.currentQuestionSubject.next(question);
+  }
+
+  setIsAdvanced(isAdvanced: boolean): void {
+    this.isAdvancedSubject.next(isAdvanced);
+  }
+
+  getIsAdvanced(): boolean {
+    return this.isAdvancedSubject.value;
   }
 
   addTossResult(result: CoinTossResult): void {
@@ -33,6 +45,7 @@ export class ConsultationService {
   clearTossResults(): void {
     this.tossResultsSubject.next([]);
     this.currentQuestionSubject.next('');
+    this.isAdvancedSubject.next(false);
     // Clear current consultation when starting new one
     this.currentConsultationSubject.next(null);
   }

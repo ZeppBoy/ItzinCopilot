@@ -61,10 +61,13 @@ export class ConsultationFlow implements OnInit {
     let question: string | undefined;
     this.consultationService.currentQuestion$.subscribe(q => question = q || undefined).unsubscribe();
 
+    const isAdvanced = this.consultationService.getIsAdvanced();
+
     this.consultationService.createConsultation({
       question,
       tossResults: tossValues,
-      language: 'en'
+      language: 'en',
+      isAdvanced: isAdvanced
     }).subscribe({
       next: (consultation) => {
         this.consultation = consultation;

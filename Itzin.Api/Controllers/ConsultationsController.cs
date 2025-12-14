@@ -32,16 +32,15 @@ public class ConsultationsController : ControllerBase
     {
         var userId = GetUserId();
         var language = request.Language ?? "en";
-
-        //request.TossResults.Reverse();
         
         var consultation = await _consultationService.CreateConsultationWithTossesAsync(
             userId, 
             request.Question ?? string.Empty, 
             request.TossResults, 
-            language);
+            language,
+            request.IsAdvanced);
 
-        _logger.LogInformation("Consultation created for user {UserId}", userId);
+        _logger.LogInformation("Consultation created for user {UserId}, IsAdvanced: {IsAdvanced}", userId, request.IsAdvanced);
 
         var dto = MapToResponseDto(consultation, language);
         return CreatedAtAction(nameof(GetById), new { id = consultation.Id }, dto);
@@ -51,19 +50,14 @@ public class ConsultationsController : ControllerBase
     [HttpPost("/test")]
     public async Task<ActionResult<ConsultationResponseDto>> Create2([FromBody] CreateConsultationDto request)
     {
-        //var userId = GetUserId();
         var language = request.Language ?? "en";
-
-        //request.TossResults.Reverse();
         
         var consultation = await _consultationService.CreateConsultationWithTossesAsync(
-            // userId,
             1,
             request.Question ?? string.Empty, 
             request.TossResults, 
-            language);
-
-       // _logger.LogInformation("Consultation created for user {UserId}", userId);
+            language,
+            request.IsAdvanced);
 
         var dto = MapToResponseDto(consultation, language);
         return CreatedAtAction(nameof(GetById), new { id = consultation.Id }, dto);
@@ -177,8 +171,12 @@ public class ConsultationsController : ControllerBase
         var isRussian = language.ToLower() == "ru";
         var tossValues = consultation.TossResults.Split(',').Select(int.Parse).ToList();
         var changingLines = consultation.ChangingLines?.Split(',').Select(int.Parse).ToList();
+        var additionalChangingHexagrams = consultation.AdditionalChangingHexagrams?
+            .Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(int.Parse)
+            .ToList();
 
-        return new ConsultationResponseDto
+        var dto = new ConsultationResponseDto
         {
             Id = consultation.Id,
             Question = consultation.Question,
@@ -189,8 +187,25 @@ public class ConsultationsController : ControllerBase
                 : null,
             ChangingLines = changingLines,
             TossValues = tossValues,
-            Notes = consultation.Notes
+            Notes = consultation.Notes,
+            IsAdvanced = consultation.IsAdvanced
         };
+
+        // Add advanced consultation hexagrams if applicable
+        if (consultation.IsAdvanced)
+        {
+            dto.AntiHexagram = consultation.AntiHexagram != null
+                ? MapHexagramToDto(consultation.AntiHexagram, isRussian)
+                : null;
+
+            dto.ChangingHexagram = consultation.ChangingHexagram != null
+                ? MapHexagramToDto(consultation.ChangingHexagram, isRussian)
+                : null;
+
+            dto.AdditionalChangingHexagrams = additionalChangingHexagrams;
+        }
+
+        return dto;
     }
 
     private ConsultationListDto MapToListDto(Consultation consultation, string language)
@@ -210,7 +225,8 @@ public class ConsultationsController : ControllerBase
                 RussianName = consultation.PrimaryHexagram.RussianName,
                 Unicode = consultation.PrimaryHexagram.Unicode
             },
-            HasChangingLines = !string.IsNullOrEmpty(consultation.ChangingLines)
+            HasChangingLines = !string.IsNullOrEmpty(consultation.ChangingLines),
+            IsAdvanced = consultation.IsAdvanced
         };
     }
 

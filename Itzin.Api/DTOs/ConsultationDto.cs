@@ -14,6 +14,8 @@ public class CreateConsultationDto
     [MinLength(6)]
     [MaxLength(6)]
     public List<int> TossResults { get; set; } = new();
+
+    public bool IsAdvanced { get; set; } = false;
 }
 
 public class ConsultationResponseDto
@@ -26,6 +28,12 @@ public class ConsultationResponseDto
     public List<int>? ChangingLines { get; set; }
     public List<int> TossValues { get; set; } = new();
     public string? Notes { get; set; }
+
+    // Advanced Consultation Properties
+    public bool IsAdvanced { get; set; }
+    public HexagramDto? AntiHexagram { get; set; }
+    public HexagramDto? ChangingHexagram { get; set; }
+    public List<int>? AdditionalChangingHexagrams { get; set; }
 }
 
 public class ConsultationListDto
@@ -35,6 +43,7 @@ public class ConsultationListDto
     public DateTime ConsultationDate { get; set; }
     public HexagramListDto PrimaryHexagram { get; set; } = null!;
     public bool HasChangingLines { get; set; }
+    public bool IsAdvanced { get; set; }
 }
 
 public class UpdateConsultationNotesDto

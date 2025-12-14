@@ -21,18 +21,24 @@ export class QuestionInput {
 
   constructor() {
     this.questionForm = this.fb.group({
-      question: ['']
+      question: [''],
+      isAdvanced: [false]
     });
   }
 
   onSubmit(): void {
     const question = this.questionForm.value.question?.trim() || '';
+    const isAdvanced = this.questionForm.value.isAdvanced || false;
+    
     this.consultationService.setQuestion(question);
+    this.consultationService.setIsAdvanced(isAdvanced);
+    
     this.questionSubmitted.emit(question);
   }
 
   skip(): void {
     this.consultationService.setQuestion('');
+    this.consultationService.setIsAdvanced(false);
     this.questionSubmitted.emit('');
   }
 

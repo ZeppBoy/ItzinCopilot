@@ -49,6 +49,7 @@ public class ItzinDbContext : DbContext
             entity.Property(e => e.Question).IsRequired();
             entity.Property(e => e.TossResults).IsRequired().HasMaxLength(50);
             entity.Property(e => e.QuestionLanguage).HasMaxLength(10);
+            entity.Property(e => e.AdditionalChangingHexagrams).HasMaxLength(200);
             
             entity.HasOne(e => e.User)
                 .WithMany(u => u.Consultations)
@@ -63,6 +64,17 @@ public class ItzinDbContext : DbContext
             entity.HasOne(e => e.RelatingHexagram)
                 .WithMany(h => h.RelatingConsultations)
                 .HasForeignKey(e => e.RelatingHexagramId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Advanced Consultation Navigation Properties
+            entity.HasOne(e => e.AntiHexagram)
+                .WithMany()
+                .HasForeignKey(e => e.AntiHexagramId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(e => e.ChangingHexagram)
+                .WithMany()
+                .HasForeignKey(e => e.ChangingHexagramId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
 

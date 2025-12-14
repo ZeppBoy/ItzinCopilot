@@ -7,6 +7,10 @@ export interface Consultation {
   changingLines?: number[];
   tossValues: number[];
   notes?: string;
+  isAdvanced?: boolean;
+  antiHexagram?: HexagramInfo;
+  changingHexagram?: HexagramInfo;
+  additionalChangingHexagrams?: number[];
 }
 
 export interface HexagramInfo {
@@ -38,6 +42,7 @@ export interface CreateConsultationRequest {
   question?: string;
   tossResults: number[];
   language?: string;
+  isAdvanced?: boolean;
 }
 
 export interface ConsultationResult {
