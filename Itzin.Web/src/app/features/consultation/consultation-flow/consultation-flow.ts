@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ConsultationService } from '../../../core/services/consultation.service';
 import { QuestionInput } from '../question-input/question-input';
 import { CoinToss } from '../coin-toss/coin-toss';
@@ -17,6 +17,7 @@ import { Consultation } from '../../../core/models/consultation.model';
 export class ConsultationFlow implements OnInit {
   private consultationService = inject(ConsultationService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   currentStep: 'question' | 'toss' | 'result' = 'question';
   consultation: Consultation | null = null;
@@ -29,7 +30,17 @@ export class ConsultationFlow implements OnInit {
     if (savedConsultation) {
       this.consultation = savedConsultation;
       this.currentStep = 'result';
+    } else {
+      // No saved consultation, ensure we start fresh
+      this.resetToNewConsultation();
     }
+  }
+
+  resetToNewConsultation(): void {
+    this.currentStep = 'question';
+    this.consultation = null;
+    this.isCreating = false;
+    this.errorMessage = '';
   }
 
   onQuestionSubmitted(question: string): void {

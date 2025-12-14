@@ -18,7 +18,10 @@
   }
 
   @if (currentStep === 'result' && consultation) {
-    <app-consultation-result [consultation]="consultation"></app-consultation-result>
+    <app-consultation-result 
+      [consultation]="consultation" 
+      (newConsultationRequested)="resetToNewConsultation()">
+    </app-consultation-result>
   }
 
   @if (isCreating) {

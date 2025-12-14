@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ConsultationService } from '../../../core/services/consultation.service';
@@ -22,6 +22,7 @@ export class ConsultationResult {
   private router = inject(Router);
 
   @Input() consultation: Consultation | null = null;
+  @Output() newConsultationRequested = new EventEmitter<void>();
 
   getPrimaryHexagramLines(): HexagramLine[] {
     if (!this.consultation?.tossValues) return [];
@@ -83,8 +84,10 @@ export class ConsultationResult {
   }
 
   newConsultation(): void {
+    // Clear all consultation data including saved consultation
     this.consultationService.clearTossResults();
-    this.router.navigate(['/consultation']);
+    // Emit event to parent to reset the flow
+    this.newConsultationRequested.emit();
   }
 
   goToDashboard(): void {
