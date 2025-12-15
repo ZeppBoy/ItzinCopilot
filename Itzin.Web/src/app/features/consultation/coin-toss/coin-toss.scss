@@ -142,6 +142,13 @@
   min-width: 250px;
 }
 
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
 .hexagram-section {
   flex: 0 0 auto;
   background: #f8f9fa;
@@ -258,6 +265,73 @@
   }
 }
 
+.btn-auto-toss {
+  background: linear-gradient(135deg, #d4af37, #c9a129);
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+  min-width: 200px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    transform: rotate(45deg);
+    animation: shimmer 3s infinite;
+  }
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, #c9a129, #b8921f);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4);
+  }
+
+  &:disabled {
+    background: linear-gradient(135deg, #ccc, #bbb);
+    cursor: not-allowed;
+    box-shadow: none;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  span {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
 .completion-section {
   display: flex;
   flex-direction: column;
@@ -347,6 +421,16 @@
     .hexagram-display .hexagram-line .line-visual {
       font-size: 1.6rem;
       width: 150px;
+    }
+  }
+
+  .button-group {
+    width: 100%;
+    
+    .btn-toss,
+    .btn-auto-toss {
+      width: 100%;
+      min-width: unset;
     }
   }
 }

@@ -21,17 +21,31 @@
       <!-- Left side: Toss button and coin animation -->
       <div class="toss-section">
         @if (tossResults.length < totalTosses) {
-          <button
-            class="btn-toss"
-            (click)="performToss()"
-            [disabled]="isTossing"
-          >
-            @if (isTossing) {
-              <span>Tossing...</span>
-            } @else {
-              <span>🪙 Toss Coins</span>
-            }
-          </button>
+          <div class="button-group">
+            <button
+              class="btn-toss"
+              (click)="performToss()"
+              [disabled]="isTossing || isAutoTossing"
+            >
+              @if (isTossing) {
+                <span>Tossing...</span>
+              } @else {
+                <span>🪙 Toss Coins</span>
+              }
+            </button>
+            
+            <button
+              class="btn-auto-toss"
+              (click)="autoToss()"
+              [disabled]="isTossing || isAutoTossing"
+            >
+              @if (isAutoTossing) {
+                <span>⚡ Auto Tossing...</span>
+              } @else {
+                <span>⚡ Auto Toss All</span>
+              }
+            </button>
+          </div>
         } @else {
           <div class="completion-section">
             <div class="completion-message">

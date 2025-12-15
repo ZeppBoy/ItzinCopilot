@@ -18,6 +18,7 @@ export class CoinToss {
   tossResults: CoinTossResult[] = [];
   currentToss: CoinTossResult | null = null;
   isTossing = false;
+  isAutoTossing = false;
   showResult = false;
 
   get totalTosses(): number {
@@ -57,6 +58,51 @@ export class CoinToss {
         }
       });
     }, 1500);
+  }
+
+  autoToss(): void {
+    if (this.isAutoTossing || this.tossResults.length >= this.totalTosses) {
+      return;
+    }
+
+    this.isAutoTossing = true;
+    this.performAutoTossSequence();
+  }
+
+  private performAutoTossSequence(): void {
+    // Check if we've reached the total number of tosses
+    if (this.tossResults.length >= this.totalTosses) {
+      this.isAutoTossing = false;
+      this.showResult = true;
+      return;
+    }
+
+    this.isTossing = true;
+    this.showResult = false;
+
+    // Animate for 800ms (faster than manual toss)
+    setTimeout(() => {
+      this.consultationService.tossCoins().subscribe({
+        next: (result) => {
+          this.currentToss = result;
+          this.consultationService.addTossResult(result);
+          this.tossResults.push(result);
+
+          this.isTossing = false;
+          this.showResult = true;
+
+          // Wait 600ms before next toss to show result
+          setTimeout(() => {
+            this.performAutoTossSequence();
+          }, 600);
+        },
+        error: (error) => {
+          console.error('Error tossing coins:', error);
+          this.isTossing = false;
+          this.isAutoTossing = false;
+        }
+      });
+    }, 800);
   }
 
   proceedToResult(): void {
