@@ -11,6 +11,14 @@
           </div>
         }
 
+        <!-- Advanced Consultation Badge -->
+        @if (consultation.isAdvanced) {
+          <div class="advanced-badge">
+            <span class="badge-icon">✨</span>
+            <span class="badge-text">Advanced Consultation</span>
+          </div>
+        }
+
         <div class="hexagram-section">
           <h3>Primary Hexagram</h3>
           <div class="hexagram-card" (click)="viewHexagram(consultation.primaryHexagram.id)">
@@ -84,10 +92,112 @@
           </div>
         }
 
+        <!-- Advanced Consultation Hexagrams -->
+        @if (consultation.isAdvanced) {
+          <div class="advanced-hexagrams-section">
+            <div class="advanced-header">
+              <h3>Advanced Insights</h3>
+              <p class="advanced-description">
+                These additional hexagrams provide deeper understanding of the transformation patterns and hidden aspects of your consultation.
+              </p>
+            </div>
+
+            <!-- Anti-Hexagram -->
+            @if (consultation.antiHexagram) {
+              <div class="hexagram-section advanced-hexagram">
+                <h3>
+                  <span class="hexagram-type-icon">🔄</span>
+                  Anti-Hexagram (Inverse)
+                </h3>
+                <p class="hexagram-explanation">
+                  The complete opposite of your primary hexagram, showing the inverse perspective and hidden complementary aspects.
+                </p>
+                <div class="hexagram-card" (click)="viewHexagram(consultation.antiHexagram.id)">
+                  <div class="hexagram-content-wrapper">
+                    <div class="hexagram-visual">
+                      <div class="hexagram-number-badge anti">{{ consultation.antiHexagram.number }}</div>
+                      <div class="hexagram-symbol">{{ consultation.antiHexagram.unicode }}</div>
+                    </div>
+                    <div class="hexagram-info">
+                      <div class="hexagram-number-text">Hexagram {{ consultation.antiHexagram.number }}</div>
+                      <div class="hexagram-name-chinese">{{ consultation.antiHexagram.chineseName }}</div>
+                      <div class="hexagram-pinyin">{{ consultation.antiHexagram.pinyin }}</div>
+                      <div class="hexagram-name">{{ consultation.antiHexagram.englishName }}</div>
+                      <div class="hexagram-name-russian">{{ consultation.antiHexagram.russianName }}</div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn-view" (click)="onViewButtonClick($event, consultation.antiHexagram.id)">View Full Interpretation →</button>
+                </div>
+              </div>
+            }
+
+            <!-- Changing Hexagram -->
+            @if (consultation.changingHexagram) {
+              <div class="hexagram-section advanced-hexagram">
+                <h3>
+                  <span class="hexagram-type-icon">⚡</span>
+                  Changing Hexagram (Pattern)
+                </h3>
+                <p class="hexagram-explanation">
+                  This hexagram reveals the structure and pattern of transformation itself, highlighting which aspects are in flux.
+                </p>
+                <div class="hexagram-card" (click)="viewHexagram(consultation.changingHexagram.id)">
+                  <div class="hexagram-content-wrapper">
+                    <div class="hexagram-visual">
+                      <div class="hexagram-number-badge changing">{{ consultation.changingHexagram.number }}</div>
+                      <div class="hexagram-symbol">{{ consultation.changingHexagram.unicode }}</div>
+                    </div>
+                    <div class="hexagram-info">
+                      <div class="hexagram-number-text">Hexagram {{ consultation.changingHexagram.number }}</div>
+                      <div class="hexagram-name-chinese">{{ consultation.changingHexagram.chineseName }}</div>
+                      <div class="hexagram-pinyin">{{ consultation.changingHexagram.pinyin }}</div>
+                      <div class="hexagram-name">{{ consultation.changingHexagram.englishName }}</div>
+                      <div class="hexagram-name-russian">{{ consultation.changingHexagram.russianName }}</div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn-view" (click)="onViewButtonClick($event, consultation.changingHexagram.id)">View Full Interpretation →</button>
+                </div>
+              </div>
+            }
+
+            <!-- Additional Changing Hexagrams -->
+            @if (consultation.additionalChangingHexagrams && consultation.additionalChangingHexagrams.length > 0) {
+              <div class="hexagram-section advanced-hexagram">
+                <h3>
+                  <span class="hexagram-type-icon">🔗</span>
+                  Progressive Transformations
+                </h3>
+                <p class="hexagram-explanation">
+                  Each hexagram shows the result of individual changing lines, revealing the progressive stages of transformation.
+                </p>
+                <div class="additional-hexagrams-grid">
+                  @for (hexagramId of consultation.additionalChangingHexagrams; track hexagramId; let idx = $index) {
+                    <div class="additional-hexagram-item">
+                      <div class="additional-header">
+                        <span class="stage-label">Stage {{ idx + 1 }}</span>
+                        <span class="line-indicator">Line {{ consultation.changingLines?.[idx] }}</span>
+                      </div>
+                      <div class="hexagram-mini-card" (click)="viewHexagram(hexagramId)">
+                        <div class="hexagram-number-badge additional">{{ getHexagramNumber(hexagramId) }}</div>
+                        <div class="hexagram-name-mini">Hexagram {{ getHexagramNumber(hexagramId) }}</div>
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+
         <div class="guidance-text">
           <p>
             Click on the hexagrams above to view their full interpretations and understand the guidance they offer.
           </p>
+          @if (consultation.isAdvanced) {
+            <p class="advanced-guidance">
+              💡 <strong>Tip:</strong> Advanced hexagrams provide complementary perspectives. Consider how each relates to your question for a comprehensive understanding.
+            </p>
+          }
         </div>
 
         <div class="action-buttons">

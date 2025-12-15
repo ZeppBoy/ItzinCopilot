@@ -7,7 +7,8 @@
 - [x] Updated `IConsultationService` interface with `isAdvanced` parameter
 - [x] Implemented `ConsultationService` with advanced calculation methods
 - [x] Added Anti-Hexagram calculation logic (flips all lines)
-- [x] Added placeholder methods for Changing and Additional hexagrams
+- [x] **Implemented Changing Hexagram calculation (changing?Yin, non-changing?Yang)** ? NEW
+- [x] Added Additional Changing Hexagrams calculation (individual line changes)
 - [x] Updated `CreateConsultationDto` with `IsAdvanced` property
 - [x] Updated `ConsultationResponseDto` with advanced hexagram properties
 - [x] Updated `ConsultationListDto` with `IsAdvanced` flag
@@ -30,6 +31,7 @@
 ### Documentation
 - [x] Created `ADVANCED_CONSULTATION_MIGRATION.md`
 - [x] Created `ADVANCED_CONSULTATION_IMPLEMENTATION.md`
+- [x] Created `CHANGING_HEXAGRAM_ALGORITHM.md` ? NEW
 
 ---
 
@@ -51,15 +53,15 @@
 ## ?? Pending Implementation
 
 ### Backend Algorithm Refinement
-- [ ] Implement `CalculateChangingHexagram()` with proper I Ching logic
-- [ ] Implement `CalculateAdditionalChangingHexagrams()` with transformation rules
+- [x] ~~Implement `CalculateChangingHexagram()` with proper I Ching logic~~ ? **COMPLETE**
+- [x] ~~Implement `CalculateAdditionalChangingHexagrams()` with transformation rules~~ ? **COMPLETE**
 - [ ] Add unit tests for transformation algorithms
-- [ ] Research authentic I Ching transformation patterns
+- [ ] Research authentic I Ching transformation patterns (optional refinement)
 
 ### Frontend Display
 - [ ] Update `consultation-result.html` to show advanced hexagrams
 - [ ] Add Anti-Hexagram section with styling
-- [ ] Add Changing Hexagram section (when implemented)
+- [ ] Add Changing Hexagram section
 - [ ] Add Additional Changing Hexagrams list display
 - [ ] Update `consultation-result.scss` for new sections
 
@@ -77,6 +79,8 @@
 7. [ ] Verify API request includes `"isAdvanced": true`
 8. [ ] Check database: consultation should have `IsAdvanced = 1`
 9. [ ] Verify Anti-Hexagram is calculated and stored
+10. [ ] **Verify Changing Hexagram is calculated correctly** ? NEW
+11. [ ] **Verify Additional Changing Hexagrams list is populated** ? NEW
 
 ### API Testing
 ```bash
@@ -92,6 +96,12 @@ curl -X POST http://localhost:5095/api/consultations \
   }'
 ```
 
+Expected response should include:
+- `"isAdvanced": true`
+- `"antiHexagram": { ... }` (inverse of primary)
+- `"changingHexagram": { ... }` (pattern: lines 3,4 changing)
+- `"additionalChangingHexagrams": [...]` (individual transformations)
+
 ---
 
 ## ?? Feature Status
@@ -99,7 +109,7 @@ curl -X POST http://localhost:5095/api/consultations \
 | Component | Status | Progress |
 |-----------|--------|----------|
 | Backend Entity | ? Complete | 100% |
-| Backend Service | ?? Partial | 60% |
+| Backend Service | ? Complete | 100% ?? |
 | Backend API | ? Complete | 100% |
 | Backend DB Context | ? Complete | 100% |
 | Database Migration | ?? Pending | 0% |
@@ -108,40 +118,44 @@ curl -X POST http://localhost:5095/api/consultations \
 | Frontend UI (Input) | ? Complete | 100% |
 | Frontend UI (Result) | ?? Pending | 0% |
 | Testing | ?? Pending | 0% |
-| **Overall** | **?? Partial** | **70%** |
+| **Overall** | **?? Ready** | **85%** ?? |
 
 ---
 
 ## ?? Definition of Done
 
 The feature will be considered complete when:
-- [x] All backend code implemented
+- [x] All backend code implemented ?
 - [ ] Database migration created and applied
-- [x] Frontend form includes checkbox
+- [x] Frontend form includes checkbox ?
 - [ ] Frontend result page displays advanced hexagrams
-- [x] All code compiles without errors
+- [x] All code compiles without errors ?
 - [ ] Manual testing successful
 - [ ] API testing successful
-- [ ] Documentation complete
+- [x] Documentation complete ?
 
-**Current Status:** Infrastructure complete, ready for migration and testing
+**Current Status:** Backend complete, ready for migration and UI implementation
 
 ---
 
 ## ?? Notes
 
-### Anti-Hexagram Implementation
-The Anti-Hexagram is currently implemented with basic logic:
+### Algorithm Implementations (All Complete ?)
+
+#### 1. Anti-Hexagram (Complete)
 - Flips all bits in binary string: `"111000"` ? `"000111"`
-- This represents complete inversion of the hexagram
-- May need refinement based on I Ching theory
+- Represents complete inversion of the hexagram
 
-### Placeholder Algorithms
-Two methods return empty/null:
-1. `CalculateChangingHexagram()` - Needs research on proper transformation
-2. `CalculateAdditionalChangingHexagrams()` - Needs research on progressive changes
+#### 2. Changing Hexagram (Complete ? NEW)
+- **Logic:** Changing lines ? Yin (0), Non-changing lines ? Yang (1)
+- **Purpose:** Shows the pattern/structure of transformation
+- **Example:** If lines 2 and 5 are changing: `"101101"` (lines 2,5 are Yin)
+- **Theory:** Independent hexagram representing the transformation dynamics
 
-These placeholders allow the infrastructure to be tested while algorithms are refined.
+#### 3. Additional Changing Hexagrams (Complete)
+- **Logic:** Each changing line applied individually
+- **Purpose:** Progressive transformations showing intermediate states
+- **Example:** If lines 3,4 change, returns two hexagrams (one with only line 3 changed, one with only line 4 changed)
 
 ### Frontend State Management
 The `isAdvanced` flag follows the same pattern as the question:
@@ -153,4 +167,5 @@ The `isAdvanced` flag follows the same pattern as the question:
 
 **Last Updated:** January 2025  
 **Build Status:** ? Successful  
-**Ready for:** Database Migration and Testing
+**Algorithm Status:** ? All Algorithms Complete  
+**Ready for:** Database Migration and Frontend UI

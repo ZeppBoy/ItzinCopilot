@@ -1,4 +1,4 @@
-using Itzin.Core.Entities;
+﻿using Itzin.Core.Entities;
 using Itzin.Core.Interfaces;
 
 namespace Itzin.Infrastructure.Services;
@@ -110,13 +110,13 @@ public class ConsultationService : IConsultationService
         if (changingLines.Count > 0)
         {
             consultation.ChangingHexagramId = await CalculateChangingHexagram(primaryBinary, changingLines);
-        }
 
-        // Calculate Additional Changing Hexagrams (progressive changes)
-        var additionalHexagrams = await CalculateAdditionalChangingHexagrams(primaryBinary, changingLines);
-        if (additionalHexagrams.Count > 0)
-        {
-            consultation.AdditionalChangingHexagrams = string.Join(",", additionalHexagrams);
+            // Calculate Additional Changing Hexagrams (progressive changes)
+            var additionalHexagrams = await CalculateAdditionalChangingHexagrams(primaryBinary, changingLines);
+            if (additionalHexagrams.Count > 0)
+            {
+                consultation.AdditionalChangingHexagrams = string.Join(",", additionalHexagrams);
+            }
         }
     }
 
@@ -126,7 +126,6 @@ public class ConsultationService : IConsultationService
     /// </summary>
     private async Task<int?> CalculateAntiHexagram(string primaryBinary)
     {
-        // TODO: Implement anti-hexagram calculation
         // Flip all bits: 0 -> 1, 1 -> 0
         // Example: "111000" -> "000111"
         
@@ -136,37 +135,67 @@ public class ConsultationService : IConsultationService
     }
 
     /// <summary>
-    /// Calculates the Changing Hexagram based on specific changing lines
-    /// This might represent the hexagram with only certain lines changed
+    /// Calculates the Changing Hexagram based on changing lines pattern
+    /// Changing lines become Yin (0), non-changing lines become Yang (1)
+    /// This creates a hexagram that highlights which lines are in flux
     /// </summary>
     private async Task<int?> CalculateChangingHexagram(string primaryBinary, List<int> changingLines)
     {
-        // TODO: Implement changing hexagram calculation
-        // This could represent a specific transformation pattern
-        // For now, returning null as placeholder
+        // Create a new binary where:
+        // - Changing lines (positions in changingLines list) → '0' (Yin)
+        // - Non-changing lines → '1' (Yang)
         
-        // Example implementation idea:
-        // - Apply changes to only the first changing line
-        // - Or apply a specific pattern of changes
-        
-        return null;
+        var charArray = new char[primaryBinary.Length];
+
+        for (int i = 0; i < primaryBinary.Length; i++)
+        {
+            int linePosition = i + 1; // Lines are 1-indexed
+
+            if (changingLines.Contains(linePosition))
+            {
+                // Changing line → Yin (0)
+                charArray[i] = '0';
+            }
+            else
+            {
+                // Non-changing line → Yang (1)
+                charArray[i] = '1';
+            }
+        }
+
+        //for (int i = primaryBinary.Length; i <= 0 ; i--)
+        //{
+        //    int linePosition = i - 1; // Lines are 1-indexed
+
+        //    if (changingLines.Contains(linePosition))
+        //    {
+        //        // Changing line → Yin (0)
+        //        charArray[i] = '0';
+        //    }
+        //    else
+        //    {
+        //        // Non-changing line → Yang (1)
+        //        charArray[i] = '1';
+        //    }
+        //}
+
+        charArray = charArray.Reverse().ToArray();
+
+        var changingHexagramBinary = new string(charArray);
+        var changingHexagram = await _hexagramService.GetHexagramByBinaryAsync(changingHexagramBinary);
+        return changingHexagram?.Id;
     }
 
     /// <summary>
     /// Calculates a list of additional hexagrams representing progressive changes
-    /// Could represent intermediate states or alternative interpretations
+    /// Each hexagram shows the result of applying individual changing lines one at a time
     /// </summary>
     private async Task<List<int>> CalculateAdditionalChangingHexagrams(string primaryBinary, List<int> changingLines)
     {
-        // TODO: Implement additional changing hexagrams calculation
-        // This could represent:
-        // - Each changing line applied individually
-        // - Combinations of changing lines
-        // - Progressive transformations
-        
+        // Calculate hexagram for each individual changing line
+        // This shows the progression of changes
         var additionalHexagrams = new List<int>();
 
-        // Example placeholder: Calculate hexagram for each individual changing line
         foreach (var linePosition in changingLines)
         {
             var hexagramBinary = ApplySingleLineChange(primaryBinary, linePosition);
@@ -199,6 +228,8 @@ public class ConsultationService : IConsultationService
     {
         // Line positions are 1-indexed from bottom
         // Binary string is 0-indexed from left
+        binary = new string(binary.Reverse().ToArray());
+
         var charArray = binary.ToCharArray();
         var index = linePosition - 1;
         
@@ -206,7 +237,8 @@ public class ConsultationService : IConsultationService
         {
             charArray[index] = charArray[index] == '0' ? '1' : '0';
         }
-        
+
+        charArray = charArray.Reverse().ToArray();
         return new string(charArray);
     }
 

@@ -51,13 +51,16 @@ public class ConsultationsController : ControllerBase
     public async Task<ActionResult<ConsultationResponseDto>> Create2([FromBody] CreateConsultationDto request)
     {
         var language = request.Language ?? "en";
-        
+        var userId = 1;
+
         var consultation = await _consultationService.CreateConsultationWithTossesAsync(
-            1,
-            request.Question ?? string.Empty, 
-            request.TossResults, 
+            userId,
+            request.Question ?? string.Empty,
+            request.TossResults,
             language,
             request.IsAdvanced);
+
+        _logger.LogInformation("Consultation created for user {UserId}, IsAdvanced: {IsAdvanced}", userId, request.IsAdvanced);
 
         var dto = MapToResponseDto(consultation, language);
         return CreatedAtAction(nameof(GetById), new { id = consultation.Id }, dto);
