@@ -296,7 +296,7 @@ public static class CompleteHexagramSeed
                 "Water over wood: The image of THE WELL.",
                 "Вода над деревом: образ КОЛОДЦА."),
             
-            CreateHexagram(49, "革", "Gé", "Revolution", "Переворот", "101110", "䷰", 5, 6,
+            CreateHexagram(49, "革", "Gé", "Revolution", "Переворот", "011101", "䷰", 5, 6,
                 "REVOLUTION. On your own day You are believed. Supreme success.",
                 "ПЕРЕВОРОТ. В твой собственный день тебе верят. Высший успех.",
                 "Fire in the lake: The image of REVOLUTION.",
