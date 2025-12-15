@@ -53,9 +53,18 @@
                   {{ consultation.primaryHexagram.englishName }}
                 </span>
               </div>
-              <span class="consultation-date">
-                {{ formatDate(consultation.consultationDate) }}
-              </span>
+              <div class="header-right">
+                <span class="consultation-date">
+                  {{ formatDate(consultation.consultationDate) }}
+                </span>
+                <button 
+                  class="btn-delete" 
+                  (click)="deleteConsultation(consultation.id, $event)"
+                  title="Delete consultation"
+                  type="button">
+                  🗑️
+                </button>
+              </div>
             </div>
 
             <div class="consultation-body">

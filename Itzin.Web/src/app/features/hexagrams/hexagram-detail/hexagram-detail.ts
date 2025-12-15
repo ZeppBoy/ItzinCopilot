@@ -21,9 +21,17 @@ export class HexagramDetail implements OnInit {
   isLoading: boolean = true;
   errorMessage: string = '';
   currentLanguage: 'en' | 'ru' = 'ru'; // Changed to Russian by default
+  changingLines: number[] = []; // Track changing lines from consultation
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
+    
+    // Check for changing lines in query params
+    const changingLinesParam = this.route.snapshot.queryParams['changingLines'];
+    if (changingLinesParam) {
+      this.changingLines = changingLinesParam.split(',').map((n: string) => parseInt(n, 10));
+    }
+    
     if (id) {
       this.loadHexagram(+id);
     } else {
@@ -48,6 +56,14 @@ export class HexagramDetail implements OnInit {
         console.error('Error loading hexagram:', error);
       }
     });
+  }
+
+  isLineChanging(lineNumber: number): boolean {
+    return this.changingLines.includes(lineNumber);
+  }
+
+  getLineClass(lineNumber: number): string {
+    return this.isLineChanging(lineNumber) ? 'line-changing' : 'line-static';
   }
 
   toggleLanguage(): void {

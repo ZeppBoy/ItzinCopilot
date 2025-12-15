@@ -112,6 +112,22 @@ public class ConsultationsController : ControllerBase
         }
     }
 
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Delete(int id)
+    {
+        var userId = GetUserId();
+
+        try
+        {
+            await _consultationService.DeleteConsultationAsync(id, userId);
+            return NoContent();
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return NotFound(new { message = "Consultation not found" });
+        }
+    }
+
     [HttpPost("toss")]
     public ActionResult<CoinTossResponseDto> TossCoins([FromQuery] int tossNumber = 1)
     {

@@ -96,6 +96,16 @@ public class ConsultationService : IConsultationService
         await _consultationRepository.UpdateAsync(consultation);
     }
 
+    public async Task DeleteConsultationAsync(int consultationId, int userId)
+    {
+        var consultation = await _consultationRepository.GetByIdAsync(consultationId);
+        
+        if (consultation == null || consultation.UserId != userId)
+            throw new UnauthorizedAccessException("Consultation not found or access denied");
+
+        await _consultationRepository.DeleteAsync(consultationId);
+    }
+
     #region Advanced Consultation Methods
 
     /// <summary>

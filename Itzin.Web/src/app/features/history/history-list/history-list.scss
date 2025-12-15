@@ -193,10 +193,40 @@
     }
   }
 
+  .header-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+  }
+
   .consultation-date {
     color: #666;
     font-size: 0.95rem;
     font-style: italic;
+    flex-grow: 1;
+  }
+
+  .btn-delete {
+    background: transparent;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    opacity: 0.6;
+    flex-shrink: 0;
+
+    &:hover {
+      background: rgba(196, 30, 58, 0.1);
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
   }
 }
 

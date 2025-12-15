@@ -73,7 +73,16 @@ export class ConsultationResult {
 
   viewHexagram(id: number): void {
     console.log('viewHexagram called with id:', id);
-    this.router.navigate(['/hexagrams', id]);
+    
+    // Pass changing lines if we're viewing the primary hexagram
+    const queryParams: any = {};
+    if (this.consultation && this.consultation.changingLines && this.consultation.changingLines.length > 0) {
+      if (id === this.consultation.primaryHexagram.id) {
+        queryParams.changingLines = this.consultation.changingLines.join(',');
+      }
+    }
+    
+    this.router.navigate(['/hexagrams', id], { queryParams });
   }
 
   onViewButtonClick(event: Event, id: number): void {

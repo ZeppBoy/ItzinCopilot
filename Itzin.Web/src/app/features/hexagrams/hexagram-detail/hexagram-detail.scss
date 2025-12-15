@@ -227,6 +227,36 @@
           line-height: 1.6;
           color: #555;
         }
+
+        &.line-changing {
+          background: linear-gradient(135deg, #fff9e6 0%, #fffbf0 100%);
+          border-left: 4px solid #d4af37;
+          box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+
+          h4 {
+            color: #d4af37;
+            font-weight: 700;
+          }
+
+          p {
+            color: #333;
+            font-weight: 500;
+          }
+        }
+
+        &.line-static {
+          opacity: 0.6;
+          background: #f0f0f0;
+          border-left-color: #999;
+
+          h4 {
+            color: #666;
+          }
+
+          p {
+            color: #888;
+          }
+        }
       }
     }
   }

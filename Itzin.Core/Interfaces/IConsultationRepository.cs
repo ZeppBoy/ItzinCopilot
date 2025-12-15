@@ -8,5 +8,6 @@ public interface IConsultationRepository
     Task<List<Consultation>> GetByUserIdAsync(int userId, int skip = 0, int take = 50);
     Task<Consultation> CreateAsync(Consultation consultation);
     Task UpdateAsync(Consultation consultation);
+    Task DeleteAsync(int id);
     Task<int> GetCountByUserIdAsync(int userId);
 }

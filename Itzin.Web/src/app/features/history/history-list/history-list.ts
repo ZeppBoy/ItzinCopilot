@@ -49,4 +49,22 @@ export class HistoryList implements OnInit {
       minute: '2-digit'
     });
   }
+
+  deleteConsultation(id: number, event: Event): void {
+    event.stopPropagation();
+    
+    if (!confirm('Are you sure you want to delete this consultation? This action cannot be undone.')) {
+      return;
+    }
+
+    this.consultationService.deleteConsultation(id).subscribe({
+      next: () => {
+        this.consultations = this.consultations.filter(c => c.id !== id);
+      },
+      error: (err) => {
+        this.error = 'Failed to delete consultation';
+        console.error('Error deleting consultation:', err);
+      }
+    });
+  }
 }

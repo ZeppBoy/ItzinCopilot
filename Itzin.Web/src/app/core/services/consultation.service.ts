@@ -82,6 +82,10 @@ export class ConsultationService {
     return this.http.patch<void>(`${this.apiUrl}/${id}/notes`, { notes });
   }
 
+  deleteConsultation(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
   // Call API to generate coin toss
   tossCoins(): Observable<CoinTossResult> {
     const tossNumber = this.tossResultsSubject.value.length + 1;

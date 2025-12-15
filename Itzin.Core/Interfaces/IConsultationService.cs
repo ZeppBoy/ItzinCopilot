@@ -9,4 +9,5 @@ public interface IConsultationService
     Task<Consultation?> GetConsultationByIdAsync(int consultationId, int userId);
     Task<List<Consultation>> GetUserConsultationsAsync(int userId, int skip = 0, int take = 50);
     Task UpdateConsultationNotesAsync(int consultationId, int userId, string notes);
+    Task DeleteConsultationAsync(int consultationId, int userId);
 }

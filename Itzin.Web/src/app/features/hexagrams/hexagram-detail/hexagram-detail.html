@@ -95,37 +95,37 @@
               <h3>Черты</h3>
               <div class="lines-list">
                 @if (hexagram.ruDescription.line1) {
-                  <div class="line-interpretation">
+                  <div class="line-interpretation" [ngClass]="getLineClass(1)">
                     <h4>Черта 1</h4>
                     <p>{{ hexagram.ruDescription.line1 }}</p>
                   </div>
                 }
                 @if (hexagram.ruDescription.line2) {
-                  <div class="line-interpretation">
+                  <div class="line-interpretation" [ngClass]="getLineClass(2)">
                     <h4>Черта 2</h4>
                     <p>{{ hexagram.ruDescription.line2 }}</p>
                   </div>
                 }
                 @if (hexagram.ruDescription.line3) {
-                  <div class="line-interpretation">
+                  <div class="line-interpretation" [ngClass]="getLineClass(3)">
                     <h4>Черта 3</h4>
                     <p>{{ hexagram.ruDescription.line3 }}</p>
                   </div>
                 }
                 @if (hexagram.ruDescription.line4) {
-                  <div class="line-interpretation">
+                  <div class="line-interpretation" [ngClass]="getLineClass(4)">
                     <h4>Черта 4</h4>
                     <p>{{ hexagram.ruDescription.line4 }}</p>
                   </div>
                 }
                 @if (hexagram.ruDescription.line5) {
-                  <div class="line-interpretation">
+                  <div class="line-interpretation" [ngClass]="getLineClass(5)">
                     <h4>Черта 5</h4>
                     <p>{{ hexagram.ruDescription.line5 }}</p>
                   </div>
                 }
                 @if (hexagram.ruDescription.line6) {
-                  <div class="line-interpretation">
+                  <div class="line-interpretation" [ngClass]="getLineClass(6)">
                     <h4>Черта 6</h4>
                     <p>{{ hexagram.ruDescription.line6 }}</p>
                   </div>
@@ -165,7 +165,7 @@
                 <h3>The Lines</h3>
                 <div class="lines-list">
                   @for (line of hexagram.lines; track $index) {
-                    <div class="line-interpretation">
+                    <div class="line-interpretation" [ngClass]="getLineClass($index + 1)">
                       <h4>Line {{ $index + 1 }}</h4>
                       <p>{{ line }}</p>
                     </div>

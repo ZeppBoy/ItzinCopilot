@@ -95,7 +95,15 @@ export class HistoryDetail implements OnInit {
   }
 
   viewHexagram(id: number): void {
-    this.router.navigate(['/hexagrams', id]);
+    // Pass changing lines if we're viewing the primary hexagram
+    const queryParams: any = {};
+    if (this.consultation && this.consultation.changingLines && this.consultation.changingLines.length > 0) {
+      if (id === this.consultation.primaryHexagram.id) {
+        queryParams.changingLines = this.consultation.changingLines.join(',');
+      }
+    }
+    
+    this.router.navigate(['/hexagrams', id], { queryParams });
   }
 
   onViewButtonClick(event: Event, id: number): void {

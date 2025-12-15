@@ -54,6 +54,16 @@ public class ConsultationRepository : IConsultationRepository
         await _context.SaveChangesAsync();
     }
 
+    public async Task DeleteAsync(int id)
+    {
+        var consultation = await _context.Consultations.FindAsync(id);
+        if (consultation != null)
+        {
+            _context.Consultations.Remove(consultation);
+            await _context.SaveChangesAsync();
+        }
+    }
+
     public async Task<int> GetCountByUserIdAsync(int userId)
     {
         return await _context.Consultations.CountAsync(c => c.UserId == userId);
