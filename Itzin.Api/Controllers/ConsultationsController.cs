@@ -15,15 +15,18 @@ public class ConsultationsController : ControllerBase
 {
     private readonly IConsultationService _consultationService;
     private readonly ICoinTossService _coinTossService;
+    private readonly IHexagramService _hexagramService;
     private readonly ILogger<ConsultationsController> _logger;
 
     public ConsultationsController(
         IConsultationService consultationService,
         ICoinTossService coinTossService,
+        IHexagramService hexagramService,
         ILogger<ConsultationsController> logger)
     {
         _consultationService = consultationService;
         _coinTossService = coinTossService;
+        _hexagramService = hexagramService;
         _logger = logger;
     }
 
@@ -206,6 +209,21 @@ public class ConsultationsController : ControllerBase
                 : null;
 
             dto.AdditionalChangingHexagrams = additionalChangingHexagrams;
+            
+            // Fetch full hexagram details for additional changing hexagrams
+            if (additionalChangingHexagrams != null && additionalChangingHexagrams.Count > 0)
+            {
+                var additionalHexagramsInfo = new List<HexagramDto>();
+                foreach (var hexagramId in additionalChangingHexagrams)
+                {
+                    var hexagram = _hexagramService.GetHexagramByIdAsync(hexagramId).Result;
+                    if (hexagram != null)
+                    {
+                        additionalHexagramsInfo.Add(MapHexagramToDto(hexagram, isRussian));
+                    }
+                }
+                dto.AdditionalChangingHexagramsInfo = additionalHexagramsInfo;
+            }
         }
 
         return dto;

@@ -34,6 +34,7 @@ public class ConsultationResponseDto
     public HexagramDto? AntiHexagram { get; set; }
     public HexagramDto? ChangingHexagram { get; set; }
     public List<int>? AdditionalChangingHexagrams { get; set; }
+    public List<HexagramDto>? AdditionalChangingHexagramsInfo { get; set; }
 }
 
 public class ConsultationListDto

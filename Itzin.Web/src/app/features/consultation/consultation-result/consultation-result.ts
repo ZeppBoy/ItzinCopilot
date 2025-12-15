@@ -71,16 +71,6 @@ export class ConsultationResult {
     }
   }
 
-  /**
-   * Gets the hexagram number for display in additional changing hexagrams
-   * This is a simplified version - in a real app, you'd fetch this from a service
-   */
-  getHexagramNumber(hexagramId: number): number {
-    // For now, return the ID as the number (they match in our system)
-    // In production, you might want to fetch this from a cached hexagram list
-    return hexagramId;
-  }
-
   viewHexagram(id: number): void {
     console.log('viewHexagram called with id:', id);
     this.router.navigate(['/hexagrams', id]);

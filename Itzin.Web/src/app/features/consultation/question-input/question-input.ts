@@ -22,7 +22,7 @@ export class QuestionInput {
   constructor() {
     this.questionForm = this.fb.group({
       question: [''],
-      isAdvanced: [false]
+      isAdvanced: [true]
     });
   }
 
@@ -37,8 +37,10 @@ export class QuestionInput {
   }
 
   skip(): void {
+    const isAdvanced = this.questionForm.value.isAdvanced || false;
+    
     this.consultationService.setQuestion('');
-    this.consultationService.setIsAdvanced(false);
+    this.consultationService.setIsAdvanced(isAdvanced);
     this.questionSubmitted.emit('');
   }
 

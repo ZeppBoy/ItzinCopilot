@@ -11,6 +11,7 @@ export interface Consultation {
   antiHexagram?: HexagramInfo;
   changingHexagram?: HexagramInfo;
   additionalChangingHexagrams?: number[];
+  additionalChangingHexagramsInfo?: HexagramInfo[];
 }
 
 export interface HexagramInfo {
