@@ -47,5 +47,17 @@ export const routes: Routes = [
       .then(m => m.ConsultationFlow),
     canActivate: [authGuard]
   },
+  { 
+    path: 'history', 
+    loadComponent: () => import('./features/history/history-list/history-list')
+      .then(m => m.HistoryList),
+    canActivate: [authGuard]
+  },
+  { 
+    path: 'history/:id', 
+    loadComponent: () => import('./features/history/history-detail/history-detail')
+      .then(m => m.HistoryDetail),
+    canActivate: [authGuard]
+  },
   { path: '**', redirectTo: '/login' }
 ];

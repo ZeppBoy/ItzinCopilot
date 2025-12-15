@@ -1,0 +1,452 @@
+.history-detail-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.detail-header {
+  background: linear-gradient(135deg, #c41e3a 0%, #a01829 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .btn-back {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background: white;
+      color: #c41e3a;
+    }
+  }
+
+  .consultation-date {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.detail-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 40px;
+}
+
+.result-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  width: 100%;
+
+  h2 {
+    color: #c41e3a;
+    font-size: 2.5rem;
+    margin: 0 0 30px;
+    text-align: center;
+    font-weight: 700;
+  }
+}
+
+.question-section {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+
+  h3 {
+    color: #c41e3a;
+    font-size: 1.2rem;
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+
+  .question {
+    color: #333;
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+.hexagram-section {
+  margin-bottom: 30px;
+
+  h3 {
+    color: #c41e3a;
+    font-size: 1.3rem;
+    margin: 0 0 15px;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .hexagram-explanation {
+    text-align: center;
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    font-style: italic;
+  }
+}
+
+.hexagram-card {
+  background: linear-gradient(to bottom, #f8f9fa, white);
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 30px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 20px;
+
+  &:hover {
+    border-color: #c41e3a;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(196, 30, 58, 0.2);
+  }
+
+  &.additional-hexagram {
+    border-color: #d4af37;
+    background: linear-gradient(to bottom, #fffef8, white);
+
+    &:hover {
+      border-color: #d4af37;
+      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+    }
+  }
+
+  .hexagram-content-wrapper {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin-bottom: 25px;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+
+  .hexagram-visual {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f0f0f0, #ffffff);
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    position: relative;
+
+    .hexagram-number-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #c41e3a;
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .hexagram-symbol {
+      font-size: 4rem;
+      line-height: 1;
+      color: #c41e3a;
+      margin-bottom: 10px;
+    }
+
+    .hexagram-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 120px;
+
+      .hexagram-line {
+        display: flex;
+        justify-content: center;
+
+        img {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+      }
+    }
+  }
+
+  .hexagram-info {
+    flex: 1;
+    text-align: left;
+
+    @media (max-width: 640px) {
+      text-align: center;
+    }
+
+    .additional-label {
+      background: #d4af37;
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .hexagram-number-text {
+      color: #999;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .hexagram-name-chinese {
+      color: #c41e3a;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 5px 0;
+      line-height: 1.2;
+    }
+
+    .hexagram-pinyin {
+      color: #666;
+      font-size: 1.1rem;
+      font-style: italic;
+      margin: 5px 0;
+    }
+
+    .hexagram-name {
+      color: #333;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 10px 0 5px;
+    }
+
+    .hexagram-name-russian {
+      color: #555;
+      font-size: 1.2rem;
+      margin: 5px 0 15px;
+    }
+
+    .hexagram-description {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #e0e0e0;
+
+      strong {
+        color: #c41e3a;
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .btn-view {
+    background: #c41e3a;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+
+    &:hover {
+      background: #a01829;
+    }
+  }
+}
+
+.changing-lines-section {
+  background: #fff8dc;
+  border-left: 4px solid #d4af37;
+  border-radius: 4px;
+  padding: 15px 20px;
+  margin-bottom: 30px;
+
+  h3 {
+    color: #c41e3a;
+    font-size: 1.1rem;
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+
+  .changing-info {
+    color: #666;
+    margin: 0;
+    font-weight: 600;
+  }
+}
+
+.advanced-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border: 2px solid #d4af37;
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 40px;
+  margin-bottom: 30px;
+
+  h2 {
+    color: #d4af37;
+    font-size: 2rem;
+    margin: 0 0 20px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
+
+  .hexagram-section {
+    h3 {
+      color: #d4af37;
+      font-weight: 600;
+    }
+  }
+}
+
+.notes-section {
+  background: #f0f8ff;
+  border-left: 4px solid #4a90e2;
+  border-radius: 4px;
+  padding: 20px;
+  margin-top: 30px;
+
+  h3 {
+    color: #4a90e2;
+    font-size: 1.2rem;
+    margin: 0 0 15px;
+    font-weight: 600;
+  }
+
+  .notes-text {
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+    white-space: pre-wrap;
+  }
+}
+
+.loading,
+.error-message {
+  text-align: center;
+  padding: 80px 20px;
+  color: white;
+
+  .spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid #c41e3a;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 30px;
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
+  }
+
+  .btn-secondary {
+    background: white;
+    color: #c41e3a;
+    border: 2px solid #c41e3a;
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background: #c41e3a;
+      color: white;
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .detail-header {
+    padding: 20px;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+
+    .btn-back {
+      width: 100%;
+    }
+
+    .consultation-date {
+      font-size: 1rem;
+      align-self: center;
+    }
+  }
+
+  .detail-content {
+    padding: 40px 20px;
+  }
+
+  .result-card {
+    padding: 30px 20px;
+
+    h2 {
+      font-size: 2rem;
+    }
+  }
+
+  .hexagram-card {
+    padding: 20px;
+
+    .hexagram-name-chinese {
+      font-size: 2rem;
+    }
+
+    .hexagram-name {
+      font-size: 1.2rem;
+    }
+  }
+
+  .advanced-section {
+    padding: 20px;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+}

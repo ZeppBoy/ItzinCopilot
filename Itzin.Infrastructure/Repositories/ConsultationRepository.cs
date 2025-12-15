@@ -19,6 +19,8 @@ public class ConsultationRepository : IConsultationRepository
         return await _context.Consultations
             .Include(c => c.PrimaryHexagram)
             .Include(c => c.RelatingHexagram)
+            .Include(c => c.AntiHexagram)
+            .Include(c => c.ChangingHexagram)
             .FirstOrDefaultAsync(c => c.Id == id);
     }
 
@@ -27,6 +29,8 @@ public class ConsultationRepository : IConsultationRepository
         return await _context.Consultations
             .Include(c => c.PrimaryHexagram)
             .Include(c => c.RelatingHexagram)
+            .Include(c => c.AntiHexagram)
+            .Include(c => c.ChangingHexagram)
             .Where(c => c.UserId == userId)
             .OrderByDescending(c => c.ConsultationDate)
             .Skip(skip)

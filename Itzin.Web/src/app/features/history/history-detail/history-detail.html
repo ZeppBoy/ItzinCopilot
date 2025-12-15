@@ -1,1 +1,214 @@
-<p>history-detail works!</p>
+<div class="history-detail-container">
+  <div class="detail-header">
+    <button class="btn-back" (click)="goBack()">
+      ← Back to History
+    </button>
+    @if (consultation) {
+      <div class="consultation-date">
+        {{ formatDate(consultation.consultationDate) }}
+      </div>
+    }
+  </div>
+
+  <div class="detail-content">
+    @if (loading) {
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Loading consultation...</p>
+      </div>
+    }
+
+    @if (error) {
+      <div class="error-message">
+        <p>{{ error }}</p>
+        <button class="btn-secondary" (click)="goBack()">Back to History</button>
+      </div>
+    }
+
+    @if (!loading && !error && consultation) {
+      <div class="result-card">
+        <h2>Consultation Details</h2>
+
+        @if (consultation.question) {
+          <div class="question-section">
+            <h3>Your Question</h3>
+            <p class="question">{{ consultation.question }}</p>
+          </div>
+        }
+
+        <div class="hexagram-section">
+          <h3>Primary Hexagram</h3>
+          <div class="hexagram-card" (click)="viewHexagram(consultation.primaryHexagram.id)">
+            <div class="hexagram-content-wrapper">
+              <div class="hexagram-visual">
+                <div class="hexagram-number-badge">{{ consultation.primaryHexagram.number }}</div>
+                <div class="hexagram-symbol">{{ consultation.primaryHexagram.unicode }}</div>
+                <div class="hexagram-lines">
+                  @for (line of getPrimaryHexagramLines().reverse(); track line.lineNumber) {
+                    <div class="hexagram-line">
+                      <img [src]="getLineImagePath(line)" [alt]="line.type + ' line'" />
+                    </div>
+                  }
+                </div>
+              </div>
+              <div class="hexagram-info">
+                <div class="hexagram-number-text">Hexagram {{ consultation.primaryHexagram.number }}</div>
+                <div class="hexagram-name-chinese">{{ consultation.primaryHexagram.chineseName }}</div>
+                <div class="hexagram-pinyin">{{ consultation.primaryHexagram.pinyin }}</div>
+                <div class="hexagram-name">{{ consultation.primaryHexagram.englishName }}</div>
+                <div class="hexagram-name-russian">{{ consultation.primaryHexagram.russianName }}</div>
+                @if (consultation.primaryHexagram.judgment) {
+                  <div class="hexagram-description">
+                    <strong>Judgment:</strong> {{ consultation.primaryHexagram.judgment }}
+                  </div>
+                }
+              </div>
+            </div>
+            <button type="button" class="btn-view" (click)="onViewButtonClick($event, consultation.primaryHexagram.id)">View Full Interpretation →</button>
+          </div>
+        </div>
+
+        @if (consultation.relatingHexagram && consultation.changingLines && consultation.changingLines.length > 0) {
+          <div class="changing-lines-section">
+            <h3>Changing Lines</h3>
+            <p class="changing-info">
+              Lines {{ consultation.changingLines.join(', ') }} are changing
+            </p>
+          </div>
+
+          <div class="hexagram-section">
+            <h3>Relating Hexagram</h3>
+            <div class="hexagram-card" (click)="viewHexagram(consultation.relatingHexagram.id)">
+              <div class="hexagram-content-wrapper">
+                <div class="hexagram-visual">
+                  <div class="hexagram-number-badge">{{ consultation.relatingHexagram.number }}</div>
+                  <div class="hexagram-symbol">{{ consultation.relatingHexagram.unicode }}</div>
+                  <div class="hexagram-lines">
+                    @for (line of getRelatingHexagramLines().reverse(); track line.lineNumber) {
+                      <div class="hexagram-line">
+                        <img [src]="getLineImagePath(line)" [alt]="line.type + ' line'" />
+                      </div>
+                    }
+                  </div>
+                </div>
+                <div class="hexagram-info">
+                  <div class="hexagram-number-text">Hexagram {{ consultation.relatingHexagram.number }}</div>
+                  <div class="hexagram-name-chinese">{{ consultation.relatingHexagram.chineseName }}</div>
+                  <div class="hexagram-pinyin">{{ consultation.relatingHexagram.pinyin }}</div>
+                  <div class="hexagram-name">{{ consultation.relatingHexagram.englishName }}</div>
+                  <div class="hexagram-name-russian">{{ consultation.relatingHexagram.russianName }}</div>
+                  @if (consultation.relatingHexagram.judgment) {
+                    <div class="hexagram-description">
+                      <strong>Judgment:</strong> {{ consultation.relatingHexagram.judgment }}
+                    </div>
+                  }
+                </div>
+              </div>
+              <button type="button" class="btn-view" (click)="onViewButtonClick($event, consultation.relatingHexagram.id)">View Full Interpretation →</button>
+            </div>
+          </div>
+        }
+
+        @if (consultation.isAdvanced) {
+          <div class="advanced-section">
+            <h2>Advanced Consultation</h2>
+            
+            @if (consultation.antiHexagram) {
+              <div class="hexagram-section">
+                <h3>Anti-Hexagram (Inverse)</h3>
+                <p class="hexagram-explanation">All lines flipped: Yang becomes Yin, Yin becomes Yang</p>
+                <div class="hexagram-card" (click)="viewHexagram(consultation.antiHexagram.id)">
+                  <div class="hexagram-content-wrapper">
+                    <div class="hexagram-visual">
+                      <div class="hexagram-number-badge">{{ consultation.antiHexagram.number }}</div>
+                      <div class="hexagram-symbol">{{ consultation.antiHexagram.unicode }}</div>
+                    </div>
+                    <div class="hexagram-info">
+                      <div class="hexagram-number-text">Hexagram {{ consultation.antiHexagram.number }}</div>
+                      <div class="hexagram-name-chinese">{{ consultation.antiHexagram.chineseName }}</div>
+                      <div class="hexagram-pinyin">{{ consultation.antiHexagram.pinyin }}</div>
+                      <div class="hexagram-name">{{ consultation.antiHexagram.englishName }}</div>
+                      <div class="hexagram-name-russian">{{ consultation.antiHexagram.russianName }}</div>
+                      @if (consultation.antiHexagram.judgment) {
+                        <div class="hexagram-description">
+                          <strong>Judgment:</strong> {{ consultation.antiHexagram.judgment }}
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <button type="button" class="btn-view" (click)="onViewButtonClick($event, consultation.antiHexagram.id)">View Full Interpretation →</button>
+                </div>
+              </div>
+            }
+
+            @if (consultation.changingHexagram && consultation.changingLines && consultation.changingLines.length > 0) {
+              <div class="hexagram-section">
+                <h3>Changing Hexagram Pattern</h3>
+                <p class="hexagram-explanation">Changing lines become Yin, non-changing lines become Yang</p>
+                <div class="hexagram-card" (click)="viewHexagram(consultation.changingHexagram.id)">
+                  <div class="hexagram-content-wrapper">
+                    <div class="hexagram-visual">
+                      <div class="hexagram-number-badge">{{ consultation.changingHexagram.number }}</div>
+                      <div class="hexagram-symbol">{{ consultation.changingHexagram.unicode }}</div>
+                    </div>
+                    <div class="hexagram-info">
+                      <div class="hexagram-number-text">Hexagram {{ consultation.changingHexagram.number }}</div>
+                      <div class="hexagram-name-chinese">{{ consultation.changingHexagram.chineseName }}</div>
+                      <div class="hexagram-pinyin">{{ consultation.changingHexagram.pinyin }}</div>
+                      <div class="hexagram-name">{{ consultation.changingHexagram.englishName }}</div>
+                      <div class="hexagram-name-russian">{{ consultation.changingHexagram.russianName }}</div>
+                      @if (consultation.changingHexagram.judgment) {
+                        <div class="hexagram-description">
+                          <strong>Judgment:</strong> {{ consultation.changingHexagram.judgment }}
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <button type="button" class="btn-view" (click)="onViewButtonClick($event, consultation.changingHexagram.id)">View Full Interpretation →</button>
+                </div>
+              </div>
+            }
+
+            @if (consultation.additionalChangingHexagramsInfo && consultation.additionalChangingHexagramsInfo.length > 0) {
+              <div class="hexagram-section">
+                <h3>Progressive Transformations</h3>
+                <p class="hexagram-explanation">Individual changing line transformations</p>
+                @for (hexagram of consultation.additionalChangingHexagramsInfo; track hexagram.id; let idx = $index) {
+                  <div class="hexagram-card additional-hexagram" (click)="viewHexagram(hexagram.id)">
+                    <div class="hexagram-content-wrapper">
+                      <div class="hexagram-visual">
+                        <div class="hexagram-number-badge">{{ hexagram.number }}</div>
+                        <div class="hexagram-symbol">{{ hexagram.unicode }}</div>
+                      </div>
+                      <div class="hexagram-info">
+                        <div class="additional-label">Transformation {{ idx + 1 }}</div>
+                        <div class="hexagram-number-text">Hexagram {{ hexagram.number }}</div>
+                        <div class="hexagram-name-chinese">{{ hexagram.chineseName }}</div>
+                        <div class="hexagram-pinyin">{{ hexagram.pinyin }}</div>
+                        <div class="hexagram-name">{{ hexagram.englishName }}</div>
+                        <div class="hexagram-name-russian">{{ hexagram.russianName }}</div>
+                        @if (hexagram.judgment) {
+                          <div class="hexagram-description">
+                            <strong>Judgment:</strong> {{ hexagram.judgment }}
+                          </div>
+                        }
+                      </div>
+                    </div>
+                    <button type="button" class="btn-view" (click)="onViewButtonClick($event, hexagram.id)">View Full Interpretation →</button>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
+
+        @if (consultation.notes) {
+          <div class="notes-section">
+            <h3>Notes</h3>
+            <p class="notes-text">{{ consultation.notes }}</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
