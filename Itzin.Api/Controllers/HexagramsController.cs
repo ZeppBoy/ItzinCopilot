@@ -130,6 +130,8 @@ public class HexagramsController : ControllerBase
                 ImageRow = hexagram.RuDescription.ImageRow,
                 Description = hexagram.RuDescription.Description,
                 InnerOuterWorlds = hexagram.RuDescription.InnerOuterWorlds,
+                HiddenOpportunity = hexagram.RuDescription.HiddenOpportunity,
+                Subsequence = hexagram.RuDescription.Subsequence,
                 Definition = hexagram.RuDescription.Definition,
                 Symbol = hexagram.RuDescription.Symbol,
                 Line1 = hexagram.RuDescription.Line1,

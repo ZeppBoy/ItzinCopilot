@@ -44,7 +44,54 @@
                 </div>
               </section>
             }
-
+          @if (hexagram.ruDescription.imageRow) {
+            <section class="interpretation-section">
+              <h3>Образ</h3>
+              <div class="interpretation-text">
+                <p>{{ hexagram.ruDescription.imageRow }}</p>
+              </div>
+            </section>
+          }
+          @if (hexagram.ruDescription.description) {
+            <section class="interpretation-section">
+              <h3>Описание</h3>
+              <div class="interpretation-text">
+                <p>{{ hexagram.ruDescription.description }}</p>
+              </div>
+            </section>
+          }
+          @if (hexagram.ruDescription.innerOuterWorlds) {
+            <section class="interpretation-section">
+              <h3>Внутренний и внешний миры</h3>
+              <div class="interpretation-text">
+                <p>{{ hexagram.ruDescription.innerOuterWorlds }}</p>
+              </div>
+            </section>
+          }
+          @if (hexagram.ruDescription.hiddenOpportunity) {
+            <section class="interpretation-section">
+              <h3>Скрытая возможность</h3>
+              <div class="interpretation-text">
+                <p>{{ hexagram.ruDescription.hiddenOpportunity }}</p>
+              </div>
+            </section>
+          }
+          @if (hexagram.ruDescription.subsequence) {
+            <section class="interpretation-section">
+              <h3>Последовательность</h3>
+              <div class="interpretation-text">
+                <p>{{ hexagram.ruDescription.subsequence }}</p>
+              </div>
+            </section>
+          }
+          @if (hexagram.ruDescription.definition) {
+            <section class="interpretation-section">
+              <h3>Определение</h3>
+              <div class="interpretation-text">
+                <p>{{ hexagram.ruDescription.definition }}</p>
+              </div>
+            </section>
+          }
             @if (hexagram.ruDescription.symbol) {
               <section class="interpretation-section">
                 <h3>Символ</h3>
@@ -53,43 +100,6 @@
                 </div>
               </section>
             }
-
-            @if (hexagram.ruDescription.imageRow) {
-              <section class="interpretation-section">
-                <h3>Образ</h3>
-                <div class="interpretation-text">
-                  <p>{{ hexagram.ruDescription.imageRow }}</p>
-                </div>
-              </section>
-            }
-
-            @if (hexagram.ruDescription.description) {
-              <section class="interpretation-section">
-                <h3>Описание</h3>
-                <div class="interpretation-text">
-                  <p>{{ hexagram.ruDescription.description }}</p>
-                </div>
-              </section>
-            }
-
-            @if (hexagram.ruDescription.definition) {
-              <section class="interpretation-section">
-                <h3>Определение</h3>
-                <div class="interpretation-text">
-                  <p>{{ hexagram.ruDescription.definition }}</p>
-                </div>
-              </section>
-            }
-
-            @if (hexagram.ruDescription.innerOuterWorlds) {
-              <section class="interpretation-section">
-                <h3>Внутренний и внешний миры</h3>
-                <div class="interpretation-text">
-                  <p>{{ hexagram.ruDescription.innerOuterWorlds }}</p>
-                </div>
-              </section>
-            }
-
             <!-- Russian Lines -->
             <section class="interpretation-section">
               <h3>Черты</h3>

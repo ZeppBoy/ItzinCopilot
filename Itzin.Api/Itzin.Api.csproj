@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Itzin.Infrastructure\Itzin.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="logs\" />
+  </ItemGroup>
+
 </Project>

@@ -22,6 +22,8 @@ export interface HexagramRuDescription {
   imageRow: string;
   description: string;
   innerOuterWorlds: string;
+  hiddenOpportunity: string;
+  subsequence: string;
   definition: string;
   symbol: string;
   line1: string;
