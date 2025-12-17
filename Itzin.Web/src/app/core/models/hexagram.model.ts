@@ -50,4 +50,5 @@ export interface HexagramListItem {
   chineseName: string;
   englishName: string;
   russianName: string;
+  unicode?: string;
 }

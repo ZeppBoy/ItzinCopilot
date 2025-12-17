@@ -48,10 +48,4 @@ export class HexagramList implements OnInit {
   goBack(): void {
     this.router.navigate(['/dashboard']);
   }
-
-  getHexagramSymbol(number: number): string {
-    // Map hexagram numbers to Unicode symbols
-    // For now, return a placeholder - we'll enhance this later
-    return '☰☷';
-  }
 }

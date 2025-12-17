@@ -23,7 +23,7 @@
       @for (hexagram of hexagrams; track hexagram.id) {
         <div class="hexagram-card" (click)="viewHexagram(hexagram.id)">
           <div class="hexagram-number">{{ hexagram.number }}</div>
-          <div class="hexagram-symbol">{{ getHexagramSymbol(hexagram.number) }}</div>
+          <div class="hexagram-symbol">{{ hexagram.unicode || '☰☷' }}</div>
           <div class="hexagram-chinese">{{ hexagram.chineseName }}</div>
           <div class="hexagram-name">{{ hexagram.englishName }}</div>
         </div>
